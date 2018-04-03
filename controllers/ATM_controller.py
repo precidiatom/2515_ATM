@@ -11,8 +11,11 @@ class ATMController(Observer):
         self.atm_window.withdraw_button.config(command=self._withdraw_fund())
         self.atm_window.deposit_button.config(command=self._deposit_fund())
 
+        self._refresh_window()
+        self.account_db.add_observer(self)
+
     def _view_balance(self):
-        pass
+        self.account_db.get_balance()
 
     def _withdraw_fund(self):
         pass

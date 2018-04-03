@@ -1,8 +1,10 @@
 from tkinter import *
 
-from controllers import ATM_controller
+from controllers.ATM_controller import ATMController
+from models.account import Account
 
 if __name__ == "__main__":
     root = Tk()
-    ATM_controller.MainWindow(root)
+    account_db = Account('Merp', 1000)
+    ATMController(root, account_db)
     mainloop()

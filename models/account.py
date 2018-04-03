@@ -1,11 +1,15 @@
 from models.transaction_log import TransactionLog
 from models.transaction_types import *
 
+from observer import Observable
 
-class Account:
+
+class Account(Observable):
     __NEXT_ACCT_NUM = 9000
 
     def __init__(self, holder, balance=0.0, fee=0.0, interest=0.0):
+        super().__init__()
+
         self.balance = float(balance)
         self.holder = holder
         self.account_number = Account.__NEXT_ACCT_NUM
