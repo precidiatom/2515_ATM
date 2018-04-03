@@ -1,4 +1,4 @@
-from controllers.account import Account
+from models.account import Account
 from models.transaction_types import *
 
 

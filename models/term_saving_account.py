@@ -1,6 +1,6 @@
 import datetime
 
-from controllers.saving_account import SavingAccount
+from models.saving_account import SavingAccount
 
 
 class TermSavingAccount(SavingAccount):

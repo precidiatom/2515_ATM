@@ -1,6 +1,6 @@
 import datetime
 
-from controllers.transaction import Transaction
+from models.transaction import Transaction
 from models.transaction_types import *
 
 

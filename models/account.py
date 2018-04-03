@@ -1,4 +1,4 @@
-from controllers.transaction_log import TransactionLog
+from models.transaction_log import TransactionLog
 from models.transaction_types import *
 
 
