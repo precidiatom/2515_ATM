@@ -1,0 +1,4 @@
+'account_num', (0, 6)
+'holder_name', (512, 14)
+'balance', (1024, 12)
+'transaction_log', (1536, 201)

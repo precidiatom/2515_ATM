@@ -1,0 +1,2 @@
+'teller_id', (0, 6)
+'password', (512, 6)
