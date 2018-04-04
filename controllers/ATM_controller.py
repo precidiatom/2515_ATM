@@ -1,11 +1,12 @@
+from models.account import Account
 from observer import Observer
 from views.ATM_view import MainWindow
 
 
 class ATMController(Observer):
-    def __init__(self, master, account_db):
+    def __init__(self, master, account_num):
         self.master = master
-        self.account_db = account_db
+        self.account_db = Account.get_persist_account(account_num)
         self.atm_window = MainWindow(master)
         self.atm_window.balance_button.config(command=self._view_balance())
         self.atm_window.withdraw_button.config(command=self._withdraw_fund())
@@ -13,6 +14,10 @@ class ATMController(Observer):
 
         self._refresh_window()
         self.account_db.add_observer(self)
+
+    def _confirm_pin(self, pin):
+        if Account.login(account_num, pin):
+            self.account_db = Account.get_persist_account(account_num)
 
     def _view_balance(self):
         self.account_db.get_balance()
