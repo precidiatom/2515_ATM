@@ -15,7 +15,7 @@ class ATMController(Observer):
         self._refresh_window()
         self.account_db.add_observer(self)
 
-    def _confirm_pin(self, pin):
+    def _confirm_pin(self, account_num, pin):
         if Account.login(account_num, pin):
             self.account_db = Account.get_persist_account(account_num)
 

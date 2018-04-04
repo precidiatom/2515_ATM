@@ -1,3 +1,4 @@
+import os
 import shelve
 
 from models.transaction_log import TransactionLog
@@ -23,15 +24,23 @@ class Account(Observable):
         self.acc_file = Account.get_persist_account(self.account_number)
         self.acc_file['account_num'] = self.account_number
         self.acc_file['holder_name'] = self.holder
+        self.acc_file['balance'] = self.balance
+
+        self.acc_file['transaction_log'] = '\n[Transacton log for ' + self.holder + ' #' + str(
+            self.account_number) + ']' + '\n'
+        self.acc_file[
+            'transaction_log'] += '-------------------------------------------------------------------------------\n'
+        self.acc_file['transaction_log'] += self.transaction_log.transactions[0].get_transaction_str()
 
         Account.__NEXT_ACCT_NUM += 1
 
     @classmethod
     def get_persist_account(cls, acc_number):
-        return shelve.open(str(acc_number) + '.db')
+        return shelve.open('..\\data\\' + str(acc_number) + '.db', os.path.dirname(__file__))
 
-    def confirm_pin(self, pin):
-        return self.pin == pin
+    @staticmethod
+    def login(acc_num, pin):
+        return Account.get_persist_account(acc_num)['pin'] == pin
 
     def get_info(self):
         return {
@@ -75,7 +84,3 @@ class Account(Observable):
 
     def change_name(self, new_name):
         self.holder = new_name
-
-    def update_acc_file(self):
-        self.acc_file['balance'] = self.balance
-        self.acc_file['transaction_log'] = self.transaction_log.transactions

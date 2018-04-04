@@ -7,7 +7,7 @@ class ChequingAccount(Account):
     __INTEREST = float(-1 * 0.03)
     __OVEDRAFT_FEE = float(10.00)
 
-    def __init__(self, holder, balance):
+    def __init__(self, holder, balance=0.0):
         super().__init__(holder, balance, ChequingAccount.__OVEDRAFT_FEE, ChequingAccount.__INTEREST)
 
     def post_cheque(self, amount):
