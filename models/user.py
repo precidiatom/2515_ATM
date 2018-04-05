@@ -6,10 +6,8 @@ from models.constants import data_abs_path
 
 
 class User:
-    __NEXT_USER_ID = app_data['NEXT_USER_ID']
-
     def __init__(self, user_name, password, user_type):
-        self.user_id = User.__NEXT_USER_ID
+        self.user_id = app_data['NEXT_USER_ID']
         self.user_name = user_name
         self.password = password
         self.user_type = user_type
@@ -20,7 +18,7 @@ class User:
         self.user_obj['password'] = self.password
         self.user_obj['user_type'] = self.user_type
 
-        User.__NEXT_USER_ID = ''.join(choice('0123456789ABCDEF') for i in range(4))
+        app_data['NEXT_USER_ID'] = ''.join(choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(4))
 
     @classmethod
     def get_persist_user_obj(cls, userid):

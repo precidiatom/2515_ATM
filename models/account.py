@@ -1,5 +1,3 @@
-from shelve import open
-
 from models.constants import *
 from models.constants import app_data, data_abs_path
 from models.transaction_log import TransactionLog
@@ -8,8 +6,6 @@ from observer import Observer
 
 
 class Account(Observer):
-    __NEXT_ACCT_NUM = app_data['NEXT_ACC_NUM']
-
     def __init__(self, user, account_type='', balance=0.0, fee=0.0, interest=0.0):
         super().__init__()
 
@@ -17,7 +13,7 @@ class Account(Observer):
 
         self.user = User.get_persist_user_obj(user)
         self.pin = None
-        self.account_number = Account.__NEXT_ACCT_NUM
+        self.account_number = app_data['NEXT_ACC_NUM']
         self.fee = float(fee)
         self.interest = float(interest)
         self.transaction_log = TransactionLog(self, balance)
@@ -34,7 +30,7 @@ class Account(Observer):
             'transaction_log'] += '-------------------------------------------------------------------------------\n'
         self.acc_file['transaction_log'] += self.transaction_log.transactions[0].get_transaction_str()
 
-        Account.__NEXT_ACCT_NUM += 1
+        app_data['NEXT_ACC_NUM'] += 1
 
     @classmethod
     def get_persist_account(cls, acc_number):
