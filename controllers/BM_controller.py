@@ -36,8 +36,10 @@ class BMController:
 
     def _create_user(self):
         new_user = User(self.session.new_user['user_name'], self.session.new_user['pin'], 'customer')
+        self.session.output(new_user.get_user_info(), '\n[ New user created ]')
 
     def _create_account(self):
+        new_account = None
         if self.session.new_acc['account_type'] == 'chequing':
             new_account = ChequingAccount(self.session.new_acc['account_holder'])
         elif self.session.new_acc['account_type'] == 'saving':
@@ -45,9 +47,12 @@ class BMController:
         elif self.session.new_acc['account_type'] == 'term_saving':
             new_account = TermSavingAccount(self.session.new_acc['account_holder'])
 
+        self.session.output(new_account.get_info(),
+                            '\n[ New account created for user {} ]'.format(self.session.new_acc['account_holder']))
+
     def _get_transaction_logs(self):
         account = Account.get_persist_account(self.session.view_logs_for)
-        print(account['transaction_log'])
+        self.session.output(account['transaction_log'])
 
 
 if __name__ == '__main__':

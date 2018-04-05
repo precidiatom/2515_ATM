@@ -6,7 +6,7 @@ from observer import Observer
 
 
 class Account(Observer):
-    def __init__(self, user, account_type='', balance=0.0, fee=0.0, interest=0.0):
+    def __init__(self, user, account_type='Default', balance=0.0, fee=0.0, interest=0.0):
         super().__init__()
 
         self.balance = float(balance)
@@ -41,8 +41,9 @@ class Account(Observer):
 
     def get_info(self):
         return {
-            "name": self.user,
+            "account_holder": self.user['user_name'],
             "account_number": self.account_number,
+            "account_type": self.acc_file['account_type'],
             "balance": "$" + str(self.balance)
         }
 

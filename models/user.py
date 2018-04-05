@@ -20,6 +20,13 @@ class User:
 
         app_data['NEXT_USER_ID'] = ''.join(choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(4))
 
+    def get_user_info(self):
+        return {
+            'user_id': self.user_id,
+            'user_name': self.user_name,
+            'user_type': self.user_type
+        }
+
     @classmethod
     def get_persist_user_obj(cls, userid):
         return open(data_abs_path + '\\' + str(userid) + '.db')
