@@ -1,20 +1,21 @@
-import os
-import shelve
+from shelve import open
 
+from models.constants import *
+from models.constants import app_data, data_abs_path
 from models.transaction_log import TransactionLog
-from models.transaction_types import *
-from observer import Observable
+from models.user import User
+from observer import Observer
 
 
-class Account(Observable):
-    __NEXT_ACCT_NUM = 9000
+class Account(Observer):
+    __NEXT_ACCT_NUM = app_data['NEXT_ACC_NUM']
 
-    def __init__(self, holder, balance=0.0, fee=0.0, interest=0.0):
+    def __init__(self, user, account_type='', balance=0.0, fee=0.0, interest=0.0):
         super().__init__()
 
         self.balance = float(balance)
 
-        self.holder = holder
+        self.user = User.get_persist_user_obj(user)
         self.pin = None
         self.account_number = Account.__NEXT_ACCT_NUM
         self.fee = float(fee)
@@ -22,11 +23,12 @@ class Account(Observable):
         self.transaction_log = TransactionLog(self, balance)
 
         self.acc_file = Account.get_persist_account(self.account_number)
+        self.acc_file['holder_name'] = self.user['user_name']
         self.acc_file['account_num'] = self.account_number
-        self.acc_file['holder_name'] = self.holder
+        self.acc_file['account_type'] = account_type
         self.acc_file['balance'] = self.balance
 
-        self.acc_file['transaction_log'] = '\n[Transacton log for ' + self.holder + ' #' + str(
+        self.acc_file['transaction_log'] = '\n[Transacton log for ' + self.user['user_name'] + ' #' + str(
             self.account_number) + ']' + '\n'
         self.acc_file[
             'transaction_log'] += '-------------------------------------------------------------------------------\n'
@@ -36,7 +38,7 @@ class Account(Observable):
 
     @classmethod
     def get_persist_account(cls, acc_number):
-        return shelve.open('..\\data\\' + str(acc_number) + '.db', os.path.dirname(__file__))
+        return open(data_abs_path + '\\' + str(acc_number) + '.db')
 
     @staticmethod
     def login(acc_num, pin):
@@ -44,7 +46,7 @@ class Account(Observable):
 
     def get_info(self):
         return {
-            "name": self.holder,
+            "name": self.user,
             "account_number": self.account_number,
             "balance": "$" + str(self.balance)
         }
@@ -60,7 +62,7 @@ class Account(Observable):
         return self.balance
 
     def show_transaction_log(self):
-        transaction_log = ['[Transacton log for ' + self.holder + ' #' + str(self.account_number) + ']',
+        transaction_log = ['[Transacton log for ' + self.user['user_name'] + ' #' + str(self.account_number) + ']',
                            '-------------------------------------------------------------------------------']
         transaction_log.extend([transaction.get_transaction_str() for transaction in self.transaction_log.transactions])
         transaction_log.append('\n')
@@ -83,4 +85,4 @@ class Account(Observable):
         self.transaction_log.add_transaction(PAY_INTEREST, interest_fee)
 
     def change_name(self, new_name):
-        self.holder = new_name
+        self.user = new_name

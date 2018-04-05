@@ -1,8 +1,8 @@
 from models.account import Account
 from models.chequing_account import ChequingAccount
 from models.saving_account import SavingAccount
-from models.teller import Teller
 from models.term_saving_account import TermSavingAccount
+from models.user import User
 from views.BM_view import CommandInterface
 
 
@@ -10,10 +10,14 @@ class BMController:
 
     def __init__(self):
         self.session = CommandInterface()
-        while not self._login(self.session):
+
+        while not self._login():
             self.session = CommandInterface()
 
         self.session.main_menu()
+
+        if self.session.new_user:
+            self._create_user()
 
         if self.session.new_acc:
             self._create_account()
@@ -21,13 +25,17 @@ class BMController:
         if self.session.view_logs_for:
             self._get_transaction_logs()
 
-    def _login(self, session):
-        if Teller.login(session.teller_id, session.teller_password):
+    def _login(self):
+        if User.login(self.session.teller_id, self.session.teller_password) and \
+                User.teller_access(self.session.teller_id):
             print('Login successful\n')
             return True
         else:
-            print('Authentication failure\n')
+            print('Login failed\n')
             return False
+
+    def _create_user(self):
+        new_user = User(self.session.new_user['user_name'], self.session.new_user['password'], 'customer')
 
     def _create_account(self):
         if self.session.new_acc['account_type'] == 'chequing':
@@ -43,4 +51,4 @@ class BMController:
 
 
 if __name__ == '__main__':
-    bmController = BMController()
+    controller = BMController()

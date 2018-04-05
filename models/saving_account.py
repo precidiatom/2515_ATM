@@ -1,5 +1,5 @@
 from models.account import Account
-from models.transaction_types import *
+from models.constants import *
 
 
 class SavingAccount(Account):
@@ -7,8 +7,8 @@ class SavingAccount(Account):
     __MINIMUM_BALANCE_FEE = 10.00
     __MINIMUM_BALANCE = 1000
 
-    def __init__(self, holder, balance=0.0):
-        super().__init__(holder, balance, SavingAccount.__MINIMUM_BALANCE_FEE, SavingAccount.__INTEREST)
+    def __init__(self, user, balance=0.0):
+        super().__init__(user, 'Saving Account', balance, SavingAccount.__MINIMUM_BALANCE_FEE, SavingAccount.__INTEREST)
 
     def pay_interest(self):
         if self.balance >= SavingAccount.__MINIMUM_BALANCE:

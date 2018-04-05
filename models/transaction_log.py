@@ -1,7 +1,7 @@
 import datetime
 
+from models.constants import *
 from models.transaction import Transaction
-from models.transaction_types import *
 
 
 class TransactionLog:

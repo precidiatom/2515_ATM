@@ -5,8 +5,9 @@ from models.saving_account import SavingAccount
 
 class TermSavingAccount(SavingAccount):
 
-    def __init__(self, holder, balance=0.0):
-        super().__init__(holder, balance)
+    def __init__(self, user, balance=0.0):
+        super().__init__(user, balance)
+        self.acc_file['account_type'] = 'Term Saving Account'
         self.last_deposit_date = datetime.datetime.now()
 
     def withdraw(self, amount):
