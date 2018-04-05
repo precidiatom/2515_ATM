@@ -12,7 +12,6 @@ class Account(Observer):
         self.balance = float(balance)
 
         self.user = User.get_persist_user_obj(user)
-        self.pin = None
         self.account_number = app_data['NEXT_ACC_NUM']
         self.fee = float(fee)
         self.interest = float(interest)

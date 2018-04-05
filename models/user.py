@@ -6,16 +6,16 @@ from models.constants import data_abs_path
 
 
 class User:
-    def __init__(self, user_name, password, user_type):
+    def __init__(self, user_name, pin, user_type):
         self.user_id = app_data['NEXT_USER_ID']
         self.user_name = user_name
-        self.password = password
+        self.pin = pin
         self.user_type = user_type
 
         self.user_obj = User.get_persist_user_obj(self.user_id)
         self.user_obj['user_id'] = self.user_id
         self.user_obj['user_name'] = self.user_name
-        self.user_obj['password'] = self.password
+        self.user_obj['pin'] = self.pin
         self.user_obj['user_type'] = self.user_type
 
         app_data['NEXT_USER_ID'] = ''.join(choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(4))
@@ -25,8 +25,8 @@ class User:
         return open(data_abs_path + '\\' + str(userid) + '.db')
 
     @staticmethod
-    def login(userid, password):
-        return str(User.get_persist_user_obj(userid)['password']) == str(password)
+    def login(userid, pin):
+        return str(User.get_persist_user_obj(userid)['pin']) == str(pin)
 
     @staticmethod
     def teller_access(userid):

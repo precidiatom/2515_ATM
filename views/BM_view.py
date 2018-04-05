@@ -2,7 +2,7 @@ class CommandInterface:
 
     def __init__(self):
         self.teller_id = input('Teller ID: ')
-        self.teller_password = input('Password: ')
+        self.teller_pin = input('PIN: ')
         self.new_acc = {}
         self.new_user = {}
         self.view_logs_for = None
@@ -25,7 +25,7 @@ class CommandInterface:
 
     def create_user_inputs(self):
         self.new_user['user_name'] = input('\nEnter the name of the user: ')
-        self.new_user['password'] = input('Create password for the user: ')
+        self.new_user['pin'] = input('Create PIN for the user: ')
 
     def create_account_inputs(self):
         self.new_acc['account_holder'] = input('User ID of account holder: ')
@@ -37,7 +37,7 @@ class CommandInterface:
         print('3 - Term Saving Account')
         account_type = input()
         self.new_acc['account_type'] = CommandInterface._resolve_account_type(account_type)
-
+        self.new_acc['pin'] = input('\nCreate account PIN: ')
 
     def view_logs_inputs(self):
         self.view_logs_for = input('Enter the account number you want to view logs for: ')

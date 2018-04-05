@@ -26,7 +26,7 @@ class BMController:
             self._get_transaction_logs()
 
     def _login(self):
-        if User.login(self.session.teller_id, self.session.teller_password) and \
+        if User.login(self.session.teller_id, self.session.teller_pin) and \
                 User.teller_access(self.session.teller_id):
             print('Login successful\n')
             return True
@@ -35,7 +35,7 @@ class BMController:
             return False
 
     def _create_user(self):
-        new_user = User(self.session.new_user['user_name'], self.session.new_user['password'], 'customer')
+        new_user = User(self.session.new_user['user_name'], self.session.new_user['pin'], 'customer')
 
     def _create_account(self):
         if self.session.new_acc['account_type'] == 'chequing':
