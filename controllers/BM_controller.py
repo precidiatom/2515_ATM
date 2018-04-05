@@ -25,6 +25,9 @@ class BMController:
         if self.session.delete_user:
             self._delete_user()
 
+        if self.session.delete_acc_for and self.session.delete_account:
+            self._delete_account()
+
         if self.session.view_user_info_for:
             self._get_user_info()
 
@@ -50,6 +53,11 @@ class BMController:
     def _delete_user(self):
         User.delete_user(self.session.delete_user)
         self.session.output({'deleted': 'user {} and their related accounts'.format(self.session.delete_user)})
+
+    def _delete_account(self):
+        Account.delete_account(self.session.delete_acc_for, self.session.delete_account)
+        self.session.output(
+            {'deleted': 'Account #{} for user {}'.format(self.session.delete_account, self.session.delete_acc_for)})
 
     def _create_account(self):
         new_account = None

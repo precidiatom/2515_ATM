@@ -10,7 +10,8 @@ class CommandInterface:
         self.view_acc_info_for = None
         self.view_acc_num = None
         self.delete_user = None
-        self.delete_accout = None
+        self.delete_acc_for = None
+        self.delete_account = None
 
     def main_menu(self):
         print('\nMAIN MENU')
@@ -33,9 +34,9 @@ class CommandInterface:
             self.view_user_info_inputs()
         elif action == '4' or action == '5':
             self.view_acc_info_inputs(action)
-        elif action == '5':
-            self.delete_user_inputs()
         elif action == '6':
+            self.delete_user_inputs()
+        elif action == '7':
             self.delete_acc_inputs()
 
     def create_user_inputs(self):
@@ -63,7 +64,8 @@ class CommandInterface:
         self.view_logs_for = self.view_acc_info_for if action == '5' else None
 
     def delete_acc_inputs(self):
-        pass
+        self.delete_acc_for = input('Enter the user ID of the account holder: ')
+        self.delete_account = input('Enter the account number you want to delete: ')
 
     def delete_user_inputs(self):
         self.delete_user = input('Enter the ID for the user you want to delete: ')

@@ -1,3 +1,4 @@
+from glob import glob
 from os import remove
 from random import choice
 
@@ -38,8 +39,9 @@ class Account(Observer):
         return open(data_abs_path + '\\' + str(userid) + str(acc_number) + '.db')
 
     @staticmethod
-    def delete_account(acc_number):
-        return remove(data_abs_path + '\\*' + str(acc_number) + '.db.*')
+    def delete_account(userid, acc_number):
+        for acc_file in glob(data_abs_path + '\\' + str(userid) + str(acc_number) + '.db.*'):
+            remove(acc_file)
 
     @staticmethod
     def login(acc_num, pin):
