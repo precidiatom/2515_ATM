@@ -28,10 +28,10 @@ class BMController:
     def _login(self):
         if User.login(self.session.teller_id, self.session.teller_pin) and \
                 User.teller_access(self.session.teller_id):
-            print('Login successful\n')
+            self.session.output(None, 'Login successful\n')
             return True
         else:
-            print('Login failed\n')
+            self.session.output({'authentication_failure': 'wrong ID or PIN\n'}, '[ Login failed ]')
             return False
 
     def _create_user(self):

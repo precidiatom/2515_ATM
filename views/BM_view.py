@@ -42,10 +42,11 @@ class CommandInterface:
     def view_logs_inputs(self):
         self.view_logs_for = input('Enter the account number you want to view logs for: ')
 
-    def output(self, obj, msg=''):
+    @staticmethod
+    def output(obj, msg=''):
         print(msg)
         for k, v in obj.items():
-            print('{}: {}'.format(k.replace('_', ' '), v))
+            print('{}: {}'.format(k.replace('_', ' ').upper(), v))
 
     @staticmethod
     def _resolve_account_type(num):

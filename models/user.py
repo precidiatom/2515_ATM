@@ -1,8 +1,7 @@
 from random import choice
 from shelve import open
 
-from models.constants import app_data
-from models.constants import data_abs_path
+from models.constants import app_data, data_abs_path
 
 
 class User:
@@ -18,7 +17,7 @@ class User:
         self.user_obj['pin'] = self.pin
         self.user_obj['user_type'] = self.user_type
 
-        app_data['NEXT_USER_ID'] = ''.join(choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(4))
+        app_data['NEXT_USER_ID'] = ''.join(choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(5))
 
     def get_user_info(self):
         return {
@@ -27,13 +26,13 @@ class User:
             'user_type': self.user_type
         }
 
-    @classmethod
-    def get_persist_user_obj(cls, userid):
+    @staticmethod
+    def get_persist_user_obj(userid):
         return open(data_abs_path + '\\' + str(userid) + '.db')
 
     @staticmethod
     def login(userid, pin):
-        return str(User.get_persist_user_obj(userid)['pin']) == str(pin)
+        return pin in User.get_persist_user_obj(userid) and str(User.get_persist_user_obj(userid)['pin']) == str(pin)
 
     @staticmethod
     def teller_access(userid):
