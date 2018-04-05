@@ -7,8 +7,9 @@ class ChequingAccount(Account):
     __INTEREST = float(-1 * 0.03)
     __OVEDRAFT_FEE = float(10.00)
 
-    def __init__(self, user, balance=0.0):
-        super().__init__(user, 'Chequing Account', balance, ChequingAccount.__OVEDRAFT_FEE, ChequingAccount.__INTEREST)
+    def __init__(self, userid, balance=0.0):
+        super().__init__(userid, 'Chequing Account', balance, ChequingAccount.__OVEDRAFT_FEE,
+                         ChequingAccount.__INTEREST)
 
     def post_cheque(self, amount):
         if self.balance - amount < ChequingAccount.__OVERDRAFT_AMOUNT:

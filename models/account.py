@@ -1,23 +1,25 @@
+from os import remove
+from random import choice
+
 from models.constants import *
-from models.constants import app_data, data_abs_path
 from models.transaction_log import TransactionLog
 from models.user import User
 from observer import Observer
 
 
 class Account(Observer):
-    def __init__(self, user, account_type='Default', balance=0.0, fee=0.0, interest=0.0):
+    def __init__(self, userid, account_type='Default', balance=0.0, fee=0.0, interest=0.0):
         super().__init__()
 
         self.balance = float(balance)
 
-        self.user = User.get_persist_user_obj(user)
+        self.user = User.get_persist_user_obj(userid)
         self.account_number = app_data['NEXT_ACC_NUM']
         self.fee = float(fee)
         self.interest = float(interest)
         self.transaction_log = TransactionLog(self, balance)
 
-        self.acc_file = Account.get_persist_account(self.account_number)
+        self.acc_file = Account.get_persist_account(userid, self.account_number)
         self.acc_file['holder_name'] = self.user['user_name']
         self.acc_file['account_num'] = self.account_number
         self.acc_file['account_type'] = account_type
@@ -29,11 +31,15 @@ class Account(Observer):
             'transaction_log'] += '-------------------------------------------------------------------------------\n'
         self.acc_file['transaction_log'] += self.transaction_log.transactions[0].get_transaction_str()
 
-        app_data['NEXT_ACC_NUM'] += 1
+        app_data['NEXT_ACC_NUM'] = ''.join(choice('0123456789') for i in range(4))
 
-    @classmethod
-    def get_persist_account(cls, acc_number):
-        return open(data_abs_path + '\\' + str(acc_number) + '.db')
+    @staticmethod
+    def get_persist_account(userid, acc_number):
+        return open(data_abs_path + '\\' + str(userid) + str(acc_number) + '.db')
+
+    @staticmethod
+    def delete_account(acc_number):
+        return remove(data_abs_path + '\\*' + str(acc_number) + '.db.*')
 
     @staticmethod
     def login(acc_num, pin):

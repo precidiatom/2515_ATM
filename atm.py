@@ -5,6 +5,6 @@ from models.account import Account
 
 if __name__ == "__main__":
     root = Tk()
-    account_db = Account('Merp', 1000)
+    account_db = Account('a0101')
     ATMController(root, account_db)
     mainloop()

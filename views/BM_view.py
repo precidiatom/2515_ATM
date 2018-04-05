@@ -6,6 +6,7 @@ class CommandInterface:
         self.new_acc = {}
         self.new_user = {}
         self.view_logs_for = None
+        self.delete_user = None
 
     def main_menu(self):
         print('\nMAIN MENU')
@@ -13,6 +14,7 @@ class CommandInterface:
         print('1 - Create an user')
         print('2 - Create an account for an user')
         print('3 - View logs for an account')
+        print('4 - Delete an user')
 
         action = input()
 
@@ -22,6 +24,8 @@ class CommandInterface:
             self.create_account_inputs()
         elif action == '3':
             self.view_logs_inputs()
+        elif action == '4':
+            self.delete_user_inputs()
 
     def create_user_inputs(self):
         self.new_user['user_name'] = input('\nEnter the name of the user: ')
@@ -41,6 +45,9 @@ class CommandInterface:
 
     def view_logs_inputs(self):
         self.view_logs_for = input('Enter the account number you want to view logs for: ')
+
+    def delete_user_inputs(self):
+        self.delete_user = input('Enter the ID for the user you want to delete: ')
 
     @staticmethod
     def output(obj, msg=''):

@@ -1,3 +1,5 @@
+from glob import glob
+from os import remove
 from random import choice
 from shelve import open
 
@@ -17,7 +19,7 @@ class User:
         self.user_obj['pin'] = self.pin
         self.user_obj['user_type'] = self.user_type
 
-        app_data['NEXT_USER_ID'] = ''.join(choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(5))
+        app_data['NEXT_USER_ID'] = ''.join(choice('abcdefghijklmnopqrstuvwxyz0123456789') for i in range(4))
 
     def get_user_info(self):
         return {
@@ -27,12 +29,18 @@ class User:
         }
 
     @staticmethod
+    def delete_user(userid):
+        for user_file in glob(data_abs_path + '\\' + str(userid) + '*.db.*'):
+            remove(user_file)
+
+    @staticmethod
     def get_persist_user_obj(userid):
         return open(data_abs_path + '\\' + str(userid) + '.db')
 
     @staticmethod
     def login(userid, pin):
-        return pin in User.get_persist_user_obj(userid) and str(User.get_persist_user_obj(userid)['pin']) == str(pin)
+        return 'pin' in User.get_persist_user_obj(userid).keys() and \
+               str(User.get_persist_user_obj(userid)['pin']) == str(pin)
 
     @staticmethod
     def teller_access(userid):
