@@ -25,8 +25,14 @@ class BMController:
         if self.session.delete_user:
             self._delete_user()
 
+        if self.session.view_user_info_for:
+            self._get_user_info()
+
         if self.session.view_acc_info_for and self.session.view_acc_num:
+            self.account = Account.get_persist_account(self.session.view_acc_info_for, self.session.view_acc_num)
             self._get_account_info()
+            if self.session.view_logs_for:
+                self._get_logs_for_account()
 
     def _login(self):
         if User.login(self.session.teller_id, self.session.teller_pin) and \
@@ -57,8 +63,18 @@ class BMController:
         self.session.output(new_account.get_info(),
                             '\n[ New account created for user {} ]'.format(self.session.new_acc['account_holder']))
 
+    def _get_logs_for_account(self):
+        self.session.output({}, self.account['transaction_log'])
+
     def _get_account_info(self):
-        self.session.output(Account.get_persist_account(self.session.view_acc_info_for, self.session.view_acc_num))
+        account = dict(self.account)
+        del account['transaction_log']
+        self.session.output(account)
+
+    def _get_user_info(self):
+        user = dict(User.get_persist_user_obj(self.session.view_user_info_for))
+        del user['pin']
+        self.session.output(user)
 
 
 if __name__ == '__main__':
