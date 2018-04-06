@@ -2,9 +2,10 @@ import tkinter as tk
 
 COMICFONT = "Comic Sans MS", 15
 COMICSMALL = "Comic Sans MS", 10
+
+
 class MainWindow:
     def __init__(self, root):
-
         self.root = root
 
         self.root.title("Meow ATM")
@@ -21,13 +22,13 @@ class MainWindow:
         self.mid_frame.grid(row=1, padx=150, pady=50)
         self.bot_frame.grid(row=4, padx=150, pady=30)
 
-# Header
+        # Header
         self.welcome = tk.Label(self.top_frame, text='Welcome to Meowmeow Bank, ', font=COMICFONT)
         self.welcome_value = tk.Label(self.top_frame, text='<placeholderformeow>', font=COMICFONT)
         self.welcome.grid(row=0, column=0)
         self.welcome_value.grid(row=0, column=1)
 
-# Main screen frame
+        # Main screen frame
         self.mainframe = tk.Frame(self.mid_frame)
         self.mainframe.grid(row=1, padx=150, pady=55)
         self.balance_button = tk.Button(self.mainframe, text='View my Balance', width=50, command=self.display_newframe)
@@ -50,6 +51,7 @@ class MainWindow:
         self.mainframe.grid_remove()
         self.current_frame = ViewBalance(self.mid_frame, self).grid(row=1, padx=150, pady=55)
 
+
 class ViewBalance(tk.Frame):
     def __init__(self, parent, MainWindow):
         self.MainWindow = MainWindow
@@ -70,6 +72,7 @@ class ViewBalance(tk.Frame):
         self.acc_balance.grid_remove()
         self.mainmenu.grid_remove()
         self.MainWindow.current_frame = tk.Frame(self.MainWindow.mainframe.grid(row=1, padx=150, pady=55))
+
 
 if __name__ == "__main__":
     root = tk.Tk()

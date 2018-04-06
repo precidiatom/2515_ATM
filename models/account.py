@@ -5,13 +5,10 @@ from random import choice
 from models.constants import *
 from models.transaction_log import TransactionLog
 from models.user import User
-from observer import Observer
 
 
-class Account(Observer):
+class Account:
     def __init__(self, userid, account_type='Default', balance=0.0, fee=0.0, interest=0.0):
-        super().__init__()
-
         self.balance = float(balance)
 
         self.user = User.get_persist_user_obj(userid)
