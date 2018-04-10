@@ -1,7 +1,9 @@
 import tkinter as tk
+
 # from views.view_balance_frame import ViewBalance
 
 COMICFONT = "Comic Sans MS", 15
+
 
 class MainWindow:
     def __init__(self, root):
@@ -29,7 +31,6 @@ class MainWindow:
 
         # Main screen frame
         self.mainframe = tk.Frame(self.mid_frame)
-        self.mainframe.grid(row=1, padx=150, pady=55)
         self.balance_button = tk.Button(self.mainframe, text='View my Balance', width=50)
 
         self.deposit_button = tk.Button(self.mainframe, text='Deposit', width=50)
@@ -45,6 +46,9 @@ class MainWindow:
         self.exit_button.grid(row=8, column=5)
 
         self.current_frame = self.mainframe
+
+    def set_main_frame(self):
+        self.mainframe.grid(row=1, padx=150, pady=55)
 
 
 if __name__ == "__main__":

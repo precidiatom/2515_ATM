@@ -1,21 +1,16 @@
-import tkinter as tk
+from controllers.ViewBalanceController import ViewBalanceController
 from models.account import Account
 from views.ATM_view import MainWindow
-from views.view_balance_frame import ViewBalance
-from views.deposit_frame import ViewDeposit
-from views.withdraw_frame import ViewWithdraw
-from views.withdraw_options_frame import ViewWithdrawOptions
-from views.deposit_entry_frame import ViewDepositInput
+
 
 class ATMController:
     def __init__(self, master, account):
         self.master = master
         self.account_db = Account.get_persist_account(account.user['user_id'], account.account_number)
-        self.atm_window = MainWindow(master)
-        self.atm_window.welcome_value.config(text=self.account_db['holder_name'])
-        self.atm_window.balance_button.config(command=self._view_balance)
-        self.atm_window.withdraw_button.config(command=self._view_withdraw)
-        self.atm_window.deposit_button.config(command=self._view_deposit)
+        self.atm_window = None
+        self.atm_balance_controller = ViewBalanceController(self)
+        # self.atm_deposit_window = ViewDeposit(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
+        # self.atm_withdrawal_window = ViewWithdraw(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
 
         # this auto calls the method but more cleaner???<_>
         # self.atm_window.balance_button.config(command=self._change_view('balance'))
@@ -24,6 +19,16 @@ class ATMController:
 
         # self.atm_window.ViewBalance.mainmenu.config(command=self._returnmainmenu)
         self._refresh_window()
+
+    def set_main_window(self):
+        self.atm_window = MainWindow(self.master)
+        self.atm_window.welcome_value.config(text=self.account_db['holder_name'])
+        self.atm_window.balance_button.config(command=self._view_balance)
+        self.atm_window.withdraw_button.config(command=self._view_withdraw)
+        self.atm_window.deposit_button.config(command=self._view_deposit)
+
+    def set_current_frame(self, frame):
+        self.atm_window.current_frame = frame
 
     def _confirm_pin(self, account_num, pin):
         if Account.login(account_num, pin):
@@ -34,36 +39,30 @@ class ATMController:
         if frame_type == 'balance':
             self.atm_window.mainframe.grid_remove()
             print('bal')
-            self.current_frame = ViewBalance(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
+            self.current_frame = self.atm_balance_window
         elif frame_type == 'deposit':
             self.atm_window.mainframe.grid_remove()
             print('dep')
-            self.current_frame = ViewDeposit(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
+            self.current_frame = self.atm_deposit_window
 
     def _view_balance(self):
+        self.atm_balance_controller.set_balance_window()
         self.atm_window.mainframe.grid_remove()
-        self.current_frame = ViewBalance(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
+        self.set_current_frame(self.atm_balance_controller.atm_balance_window)
 
     def _view_deposit(self):
         self.atm_window.mainframe.grid_remove()
-        self.current_frame = ViewDeposit(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
+        self.current_frame = self.atm_deposit_window
 
     def _deposit_fund(self):
         pass
 
     def _view_withdraw(self):
         self.atm_window.mainframe.grid_remove()
-        self.current_frame = ViewWithdraw(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
+        self.current_frame = self.atm_withdrawal_window
 
     def _withdraw_fund(self):
         pass
-
-    def _returnmainmenu(self):
-        del self.atm_window.MainWindow.current_frame
-        self.atm_window.welcome.destroy()
-        self.atm_window.acc_balance.grid_remove()
-        self.atm_window.mainmenu.grid_remove()
-        self.atm_window.MainWindow.current_frame = tk.Frame(self.MainWindow.mainframe.grid(row=1, padx=150, pady=55))
 
     def _refresh_window(self):
         pass
