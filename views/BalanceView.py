@@ -23,5 +23,9 @@ class ViewBalance(tk.Frame):
     def remove_main_frame(self):
         self.destroy()
         self.acc_balance.grid_remove()
+        self.acc_amt.grid_remove()
         self.welcome.grid_remove()
         self.main_menu_btn.grid_remove()
+
+    def show_balance(self, balance):
+        self.acc_amt.config(text=balance)
