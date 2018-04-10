@@ -7,9 +7,9 @@ COMICSMALL = "Comic Sans MS", 10
 
 
 class ViewBalance(tk.Frame):
-    def __init__(self, parent, MainWindow):
-        self.main_window = MainWindow
-        self.mainframe = tk.Frame.__init__(self, parent)
+    def __init__(self, parent):
+        super().__init__(parent)
+        # self.main_window = mainwindow
 
         self.welcome = tk.Label(parent, text='Viewing your account balance', font=COMICFONT)
         self.welcome.grid(row=0, column=0)
@@ -23,12 +23,11 @@ class ViewBalance(tk.Frame):
         self.main_menu_btn = tk.Button(parent, text="Return to Main Menu", font=COMICSMALL)
         self.main_menu_btn.grid(row=8, column=0)
 
-    # def go_mainmenu(self):
-    #     del self.main_window.current_frame
-    #     self.welcome.destroy()
-    #     self.acc_balance.grid_remove()
-    #     self.main_menu_btn.grid_remove()
-    #     self.main_window.current_frame = tk.Frame(self.main_window.mainframe.grid(row=1, padx=150, pady=55))
+    def remove_main_frame(self):
+        self.destroy()
+        self.acc_balance.grid_remove()
+        self.welcome.grid_remove()
+        self.main_menu_btn.grid_remove()
 
 
 if __name__ == "__main__":

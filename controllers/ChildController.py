@@ -10,8 +10,8 @@ class ChildController:
         self.current_window.main_menu_btn.config(command=self._return_to_main_menu)
 
     def _return_to_main_menu(self):
+        self.current_window.destroy()
         self.parent_controller.set_main_window()
-        self.parent_controller.atm_window.welcome.destroy()
         self.parent_controller.set_current_frame(self.parent_controller.atm_window)
         self.current_window.main_menu_btn.grid_remove()
-        self.current_window.destroy()
+        self.current_window.remove_main_frame()

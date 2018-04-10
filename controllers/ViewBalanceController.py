@@ -8,4 +8,4 @@ class ViewBalanceController(ChildController):
         super().__init__(parent_controller)
 
     def set_balance_window(self):
-        super().set_current_window(ViewBalance(self.parent_controller.atm_window.mid_frame, self))
+        super().set_current_window(ViewBalance(self.parent_controller.atm_window.mid_frame))
