@@ -1,6 +1,6 @@
 from models.account import Account
 from views.ATM_view import MainWindow
-
+from views.view_balance_frame import ViewBalance
 
 class ATMController:
     def __init__(self, master, account):
@@ -19,7 +19,9 @@ class ATMController:
             self.account_db = Account.get_persist_account(account_num)
 
     def _view_balance(self):
-        pass
+        print('meow')
+        self.atm_window.mainframe.grid_remove()
+        self.current_frame = ViewBalance(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
 
     def _withdraw_fund(self):
         pass
@@ -29,3 +31,4 @@ class ATMController:
 
     def _refresh_window(self):
         pass
+
