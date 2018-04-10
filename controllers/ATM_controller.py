@@ -7,7 +7,7 @@ class ATMController:
     def __init__(self, master, account):
         self.master = master
         self.account_db = Account.get_persist_account(account.user['user_id'], account.account_number)
-        self.atm_window = None
+        self.atm_window = MainWindow(self.master)
         self.atm_balance_controller = ViewBalanceController(self)
         # self.atm_deposit_window = ViewDeposit(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
         # self.atm_withdrawal_window = ViewWithdraw(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
@@ -21,7 +21,7 @@ class ATMController:
         self._refresh_window()
 
     def set_main_window(self):
-        self.atm_window = MainWindow(self.master)
+        self.atm_window.set_main_frame()
         self.atm_window.welcome_value.config(text=self.account_db['holder_name'])
         self.atm_window.balance_button.config(command=self._view_balance)
         self.atm_window.withdraw_button.config(command=self._view_withdraw)
