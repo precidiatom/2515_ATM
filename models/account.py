@@ -8,7 +8,7 @@ from models.user import User
 
 
 class Account:
-    def __init__(self, userid, account_type='Default', balance=0.0, fee=0.0, interest=0.0):
+    def __init__(self, userid, account_type, balance=0.0, fee=0.0, interest=0.0):
         self.balance = float(balance)
 
         self.user = User.get_persist_user_obj(userid)

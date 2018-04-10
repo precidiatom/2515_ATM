@@ -41,11 +41,13 @@ class CommandInterface:
 
     def create_user_inputs(self):
         self.new_user['user_name'] = input('\nEnter the name of the user: ')
-        self.new_user['pin'] = input('Create PIN for the user: ')
+        self.create_pin(self.new_user)
 
     def create_account_inputs(self):
         self.new_acc['account_holder'] = input('User ID of account holder: ')
+        self.choose_account_inputs()
 
+    def choose_account_inputs(self):
         print('\nWhat kind of account would you like to create?')
         print('------------------------')
         print('1 - Chequing Account')
@@ -53,7 +55,11 @@ class CommandInterface:
         print('3 - Term Saving Account')
         account_type = input()
         self.new_acc['account_type'] = CommandInterface._resolve_account_type(account_type)
-        self.new_acc['pin'] = input('\nCreate account PIN: ')
+        self.create_pin(self.new_acc)
+
+    @staticmethod
+    def create_pin(obj):
+        obj['pin'] = input('\nCreate PIN: ')
 
     def view_user_info_inputs(self):
         self.view_user_info_for = input('Enter the user ID you want to view info for: ')
