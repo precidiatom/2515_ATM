@@ -24,8 +24,8 @@ class ViewDeposit(tk.Frame):
         self.savings_value = tk.Label(parent)
         self.savings_value.grid(row=4, column=0)
 
-        self.mainmenu = tk.Button(parent, text="Return to Main Menu", font=COMICSMALL)
-        self.mainmenu.grid(row=9, column=0)
+        self.main_menu_btn = tk.Button(parent, text="Return to Main Menu", font=COMICSMALL)
+        self.main_menu_btn.grid(row=9, column=0)
 
 
 if __name__ == "__main__":

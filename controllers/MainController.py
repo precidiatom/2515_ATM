@@ -1,14 +1,21 @@
+from controllers.DepositController import DepositController
 from controllers.ViewBalanceController import ViewBalanceController
 from models.account import Account
 from views.ATM_view import MainWindow
 
 
-class ATMController:
+class MainController:
     def __init__(self, master, account):
         self.master = master
         self.account_db = Account.get_persist_account(account.user['user_id'], account.account_number)
         self.atm_window = MainWindow(self.master)
+        self.atm_window.welcome_value.config(text=self.account_db['holder_name'])
+        self.atm_window.balance_button.config(command=self._view_balance)
+        self.atm_window.withdraw_button.config(command=self._view_withdraw)
+        self.atm_window.deposit_button.config(command=self._view_deposit)
         self.atm_balance_controller = ViewBalanceController(self)
+        self.atm_deposit_controller = DepositController(self)
+
         # self.atm_deposit_window = ViewDeposit(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
         # self.atm_withdrawal_window = ViewWithdraw(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
 
@@ -22,10 +29,6 @@ class ATMController:
 
     def set_main_window(self):
         self.atm_window.set_main_frame()
-        self.atm_window.welcome_value.config(text=self.account_db['holder_name'])
-        self.atm_window.balance_button.config(command=self._view_balance)
-        self.atm_window.withdraw_button.config(command=self._view_withdraw)
-        self.atm_window.deposit_button.config(command=self._view_deposit)
 
     def set_current_frame(self, frame):
         self.atm_window.current_frame = frame
@@ -35,24 +38,23 @@ class ATMController:
             self.account_db = Account.get_persist_account(account_num)
 
 # wip??
-    def _change_view(self, frame_type):
-        if frame_type == 'balance':
-            self.atm_window.mainframe.grid_remove()
-            print('bal')
-            self.current_frame = self.atm_balance_window
-        elif frame_type == 'deposit':
-            self.atm_window.mainframe.grid_remove()
-            print('dep')
-            self.current_frame = self.atm_deposit_window
+    #     def _change_view(self, frame_type):
+    #         if frame_type == 'balance':
+    #             self.atm_window.mainframe.grid_remove()
+    #             print('bal')
+    #             self.current_frame = self.atm_balance_window
+    #         elif frame_type == 'deposit':
+    #             self.atm_window.mainframe.grid_remove()
+    #             print('dep')
+    #             self.current_frame = self.atm_deposit_window
 
     def _view_balance(self):
         self.atm_balance_controller.set_balance_window()
         self.atm_window.mainframe.grid_remove()
-        self.set_current_frame(self.atm_balance_controller.atm_balance_window)
 
     def _view_deposit(self):
+        self.atm_deposit_controller.set_deposit_window()
         self.atm_window.mainframe.grid_remove()
-        self.current_frame = self.atm_deposit_window
 
     def _deposit_fund(self):
         pass
