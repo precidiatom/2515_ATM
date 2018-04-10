@@ -4,7 +4,8 @@ from views.ATM_view import MainWindow
 from views.view_balance_frame import ViewBalance
 from views.deposit_frame import ViewDeposit
 from views.withdraw_frame import ViewWithdraw
-from views.withdraw_options import ViewWithdrawOptions
+from views.withdraw_options_frame import ViewWithdrawOptions
+from views.deposit_entry_frame import ViewDepositInput
 
 class ATMController:
     def __init__(self, master, account):

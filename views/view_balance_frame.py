@@ -15,6 +15,9 @@ class ViewBalance(tk.Frame):
         self.acc_balance = tk.Label(parent, text="Account Balance: ", font=COMICSMALL)
         self.acc_balance.grid(row=1, column=0)
 
+        self.acc_amt = tk.Label(parent)
+        self.acc_amt.grid(row=2, column=0)
+
         self.mainmenu = tk.Button(parent, text="Return to Main Menu", font=COMICSMALL)
         self.mainmenu.grid(row=8, column=0)
 
