@@ -14,10 +14,17 @@ class BMController:
         while not self._login():
             self.session = CommandInterface()
 
-        self.session.main_menu()
+        while not self.session.main_menu():
+            self.session.main_menu()
 
-        if self.session.new_user:
-            self._create_user()
+        user_created = False
+        while not user_created:
+            user_created = self.session.create_user_inputs()
+
+        user_pin_created = False
+        while not user_pin_created:
+            user_pin_created = self.session.create_pin('user')
+        self._create_user()
 
         if self.session.new_acc:
             self._create_account()

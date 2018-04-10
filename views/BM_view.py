@@ -27,21 +27,34 @@ class CommandInterface:
         action = input()
 
         if action == '1':
-            self.create_user_inputs()
+            # self.create_user_inputs()
+            return True
         elif action == '2':
             self.create_account_inputs()
+            return True
         elif action == '3':
             self.view_user_info_inputs()
+            return True
         elif action == '4' or action == '5':
             self.view_acc_info_inputs(action)
+            return True
         elif action == '6':
             self.delete_user_inputs()
+            return True
         elif action == '7':
             self.delete_acc_inputs()
+            return True
+        else:
+            self.output({'Error': 'please choose from available actions'}, '\n[ Invalid Input ]')
+            return False
 
     def create_user_inputs(self):
         self.new_user['user_name'] = input('\nEnter the name of the user: ')
-        self.create_pin(self.new_user)
+        if len(self.new_user['user_name']) <= 0:
+            self.output({'error': 'please enter valid user name'})
+            return False
+        else:
+            return True
 
     def create_account_inputs(self):
         self.new_acc['account_holder'] = input('User ID of account holder: ')
@@ -57,9 +70,18 @@ class CommandInterface:
         self.new_acc['account_type'] = CommandInterface._resolve_account_type(account_type)
         self.create_pin(self.new_acc)
 
-    @staticmethod
-    def create_pin(obj):
+    def create_pin(self, obj):
+        if obj == 'user':
+            obj = self.new_user
+        elif obj == 'acc':
+            obj = self.new_acc
+
         obj['pin'] = input('\nCreate PIN: ')
+        if len(obj['pin']) <= 0:
+            self.output({'error': 'please enter valid PIN'})
+            return False
+        else:
+            return True
 
     def view_user_info_inputs(self):
         self.view_user_info_for = input('Enter the user ID you want to view info for: ')
