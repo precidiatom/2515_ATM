@@ -1,14 +1,11 @@
 import tkinter as tk
 
-from views.ATM_view import MainWindow
-
 COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
 
 
 class ViewWithdraw(tk.Frame):
-    def __init__(self, parent, MainWindow):
-        self.MainWindow = MainWindow
+    def __init__(self, parent):
         tk.Frame.__init__(self, parent)
 
         self.welcome = tk.Label(parent, text='Withdraw From Which Account?', font=COMICFONT)
@@ -24,11 +21,11 @@ class ViewWithdraw(tk.Frame):
         self.savings_value = tk.Label(parent)
         self.savings_value.grid(row=4, column=0)
 
-        self.mainmenu = tk.Button(parent, text="Return to Main Menu", font=COMICSMALL)
-        self.mainmenu.grid(row=7, column=0)
+        self.main_menu_btn = tk.Button(parent, text="Return to Main Menu", font=COMICSMALL)
+        self.main_menu_btn.grid(row=7, column=0)
 
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    ViewWithdraw(root, MainWindow)
-    tk.mainloop()
+    def remove_main_frame(self):
+        self.destroy()
+        self.chequing_but.grid_remove()
+        self.savings_but.grid_remove()
+        self.welcome.grid_remove()

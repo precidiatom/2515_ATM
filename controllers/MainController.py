@@ -1,5 +1,6 @@
 from controllers.DepositController import DepositController
 from controllers.ViewBalanceController import ViewBalanceController
+from controllers.WithdrawController import WithdrawController
 from models.account import Account
 from views.ATM_view import MainWindow
 
@@ -15,6 +16,7 @@ class MainController:
         self.atm_window.deposit_button.config(command=self._view_deposit)
         self.atm_balance_controller = ViewBalanceController(self)
         self.atm_deposit_controller = DepositController(self)
+        self.atm_withdraw_controller = WithdrawController(self)
 
         # self.atm_deposit_window = ViewDeposit(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
         # self.atm_withdrawal_window = ViewWithdraw(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
@@ -60,8 +62,8 @@ class MainController:
         pass
 
     def _view_withdraw(self):
+        self.atm_withdraw_controller.set_withdraw_window()
         self.atm_window.mainframe.grid_remove()
-        self.current_frame = self.atm_withdrawal_window
 
     def _withdraw_fund(self):
         pass
