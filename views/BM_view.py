@@ -3,6 +3,7 @@ class CommandInterface:
     def __init__(self):
         self.teller_id = input('Teller ID: ')
         self.teller_pin = input('PIN: ')
+        self.action = None
         self.new_acc = {}
         self.new_user = {}
         self.view_logs_for = None
@@ -13,7 +14,13 @@ class CommandInterface:
         self.delete_acc_for = None
         self.delete_account = None
 
-    def main_menu(self):
+        self.actions_list = [str(i) for i in range(1, 8)]
+
+    def main_menu(self, failed=False):
+
+        if failed:
+            self.output({'Error': 'please choose from available actions'}, '\n[ Invalid Input ]')
+
         print('\nMAIN MENU')
         print('------------------------')
         print('1 - Create a user')
@@ -24,37 +31,25 @@ class CommandInterface:
         print('6 - Delete a user')
         print('7 - Delete an account')
 
-        action = input()
-
-        if action == '1':
-            # self.create_user_inputs()
-            return True
-        elif action == '2':
-            self.create_account_inputs()
-            return True
-        elif action == '3':
-            self.view_user_info_inputs()
-            return True
-        elif action == '4' or action == '5':
-            self.view_acc_info_inputs(action)
-            return True
-        elif action == '6':
-            self.delete_user_inputs()
-            return True
-        elif action == '7':
-            self.delete_acc_inputs()
-            return True
-        else:
-            self.output({'Error': 'please choose from available actions'}, '\n[ Invalid Input ]')
-            return False
+        self.action = input()
+        return self.action if self.action in self.actions_list else self.main_menu(failed=True)
 
     def create_user_inputs(self):
-        self.new_user['user_name'] = input('\nEnter the name of the user: ')
-        if len(self.new_user['user_name']) <= 0:
-            self.output({'error': 'please enter valid user name'})
-            return False
+        self.new_user['user_name'] = input('\nEnter the first and last name of the user: ')
+
+        if len(self.new_user['user_name']) > 0:
+            return self.create_pin(self.new_user)
         else:
-            return True
+            self.output({'error': 'please enter valid user name'})
+            return self.create_user_inputs()
+
+    def create_pin(self, obj):
+        obj['pin'] = input('\nCreate PIN: ')
+        if len(obj['pin']) > 0:
+            return obj
+        else:
+            self.output({'error': 'please enter valid PIN'})
+            return self.create_pin(obj)
 
     def create_account_inputs(self):
         self.new_acc['account_holder'] = input('User ID of account holder: ')
@@ -69,19 +64,6 @@ class CommandInterface:
         account_type = input()
         self.new_acc['account_type'] = CommandInterface._resolve_account_type(account_type)
         self.create_pin(self.new_acc)
-
-    def create_pin(self, obj):
-        if obj == 'user':
-            obj = self.new_user
-        elif obj == 'acc':
-            obj = self.new_acc
-
-        obj['pin'] = input('\nCreate PIN: ')
-        if len(obj['pin']) <= 0:
-            self.output({'error': 'please enter valid PIN'})
-            return False
-        else:
-            return True
 
     def view_user_info_inputs(self):
         self.view_user_info_for = input('Enter the user ID you want to view info for: ')

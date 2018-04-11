@@ -10,39 +10,48 @@ class BMController:
 
     def __init__(self):
         self.session = CommandInterface()
-
         while not self._login():
             self.session = CommandInterface()
 
-        while not self.session.main_menu():
-            self.session.main_menu()
+        self._navigate_mainmenu(self.session.main_menu())
 
-        user_created = False
-        while not user_created:
-            user_created = self.session.create_user_inputs()
+        # user_pin_created = False
+        # while not user_pin_created:
+        #     user_pin_created = self.session.create_pin('user')
+        # self._create_user()
+        #
+        # if self.session.new_acc:
+        #     self._create_account()
+        #
+        # if self.session.delete_user:
+        #     self._delete_user()
+        #
+        # if self.session.delete_acc_for and self.session.delete_account:
+        #     self._delete_account()
+        #
+        # if self.session.view_user_info_for:
+        #     self._get_user_info()
+        #
+        # if self.session.view_acc_info_for and self.session.view_acc_num:
+        #     self.account = Account.get_persist_account(self.session.view_acc_info_for, self.session.view_acc_num)
+        #     self._get_account_info()
+        #     if self.session.view_logs_for:
+        #         self._get_logs_for_account()
 
-        user_pin_created = False
-        while not user_pin_created:
-            user_pin_created = self.session.create_pin('user')
-        self._create_user()
-
-        if self.session.new_acc:
-            self._create_account()
-
-        if self.session.delete_user:
-            self._delete_user()
-
-        if self.session.delete_acc_for and self.session.delete_account:
-            self._delete_account()
-
-        if self.session.view_user_info_for:
-            self._get_user_info()
-
-        if self.session.view_acc_info_for and self.session.view_acc_num:
-            self.account = Account.get_persist_account(self.session.view_acc_info_for, self.session.view_acc_num)
-            self._get_account_info()
-            if self.session.view_logs_for:
-                self._get_logs_for_account()
+    def _navigate_mainmenu(self, action):
+        if action == '1':
+            new_user = self.session.create_user_inputs()
+            self._create_user(new_user)
+        elif action == '2':
+            self.session.create_account_inputs()
+        elif action == '3':
+            self.session.view_user_info_inputs()
+        elif action == '4' or action == '5':
+            self.session.view_acc_info_inputs(action)
+        elif action == '6':
+            self.session.delete_user_inputs()
+        elif action == '7':
+            self.session.delete_acc_inputs()
 
     def _login(self):
         if User.login(self.session.teller_id, self.session.teller_pin) and \
@@ -53,8 +62,8 @@ class BMController:
             self.session.output({'authentication_failure': 'wrong ID or PIN\n'}, '[ Login failed ]')
             return False
 
-    def _create_user(self):
-        new_user = User(self.session.new_user['user_name'], self.session.new_user['pin'], 'customer')
+    def _create_user(self, new_user):
+        new_user = User(new_user['user_name'], new_user['pin'], 'customer')
         self.session.output(new_user.get_user_info(), '\n[ New user created ]')
 
     def _delete_user(self):
