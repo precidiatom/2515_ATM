@@ -63,9 +63,11 @@ class BMController:
         new_account_created = None
         if User.check_valid_user(new_account['account_holder']):
             if new_account['account_type'] == 'chequing':
-                new_account_created = ChequingAccount(new_account['account_holder'])
+                new_account_created = ChequingAccount(new_account['account_holder'],
+                                                      balance=new_account['initial_balance'])
             elif new_account['account_type'] == 'saving':
-                new_account_created = SavingAccount(self.session.new_acc['account_holder'])
+                new_account_created = SavingAccount(self.session.new_acc['account_holder'],
+                                                    balance=new_account['initial_balance'])
 
             self.session.output(new_account_created.get_info(),
                                 '\n[ New account created for user {} ]'.format(new_account['account_holder']))

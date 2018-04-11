@@ -64,6 +64,10 @@ class CommandInterface:
         account_type = input()
 
         self.new_acc['account_type'] = self._resolve_account_type(account_type)
+        return self.initial_balance_input()
+
+    def initial_balance_input(self):
+        self.new_acc['initial_balance'] = input('Enter initial balance for account or press ENTER to skip: ')
         return self.new_acc
 
     def view_user_info_inputs(self):
