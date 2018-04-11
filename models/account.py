@@ -19,8 +19,8 @@ class Account:
         self.user[account_type] = {
             'account_num': self.account_number,
             'balance': self.balance,
-            'transaction_log': '\n[Transacton log for ' + self.user['user_name'] + ' #' + str(
-                self.account_number) + ']' + '\n'
+            'transaction_log': '\n[Transacton log for {} {} #{}]\n'.format(self.user['user_name'], self.account_type,
+                                                                           self.account_number)
         }
 
         # self.fee = float(fee)
@@ -30,6 +30,8 @@ class Account:
         self.user[account_type][
             'transaction_log'] += '-------------------------------------------------------------------------------\n'
         self.user[account_type]['transaction_log'] += self.transaction_log.transactions[0].get_transaction_str()
+        self.user[account_type][
+            'transaction_log'] += '\n-------------------------------------------------------------------------------\n'
 
         app_data['NEXT_ACC_NUM'] = ''.join(choice('0123456789') for i in range(4))
 

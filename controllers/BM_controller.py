@@ -81,10 +81,12 @@ class BMController:
     def _get_account_info(self, user_id, action=''):
         if User.check_valid_user(user_id):
             accounts_info = dict(Account.get_account_info_for_user(user_id))
-            if action == '4':
-                for v in accounts_info.values():
-                    del v['transaction_log']
-            self.session.output(accounts_info)
+            transaction_logs = ''
+            for v in accounts_info.values():
+                if action == '5':
+                    transaction_logs = v['transaction_log']
+                del v['transaction_log']
+            self.session.output(accounts_info, transaction_logs)
             return True
         else:
             self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
