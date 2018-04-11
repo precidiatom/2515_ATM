@@ -5,6 +5,7 @@ from models.account import Account
 from views.ATM_view import MainWindow
 from views.login_view import LoginWindow
 from models.user import User
+from controllers.main_controller import MainController
 
 class LoginController:
     def __init__(self, master, account):
@@ -23,8 +24,10 @@ class LoginController:
 
     def _confirm_pin(self, user_id, pin):
         if User.login(user_id, pin):
-            self.user = User.get_persist_user_obj(user_id)
-            #self.atm_window = MainWindow(self.master)
+            self.atm_window.remove_main_frame()
+            self.atm_window = MainController(self.master, user_id, self)
+            self.atm_window.set_main_window()
+
         else:
             self.atm_window.fail_login()
 

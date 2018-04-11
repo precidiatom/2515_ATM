@@ -4,7 +4,7 @@ from tkinter import messagebox
 COMICFONT = "Comic Sans MS", 14
 COMICSMALLER = "Comic Sans MS", 8
 
-class LoginWindow:
+class LoginWindow():
     def __init__(self, root):
         self.root = root
 
@@ -52,6 +52,10 @@ class LoginWindow:
 
     def fail_login(self):
         tk.messagebox.showerror("Incorrect account", "You have entered invalid user id or pin")
+
+    def remove_main_frame(self):
+        for widgets in self.root.winfo_children():
+            widgets.destroy()
 
 if __name__ == "__main__":
     root = tk.Tk()

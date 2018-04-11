@@ -11,4 +11,3 @@ class ViewBalanceController(ChildController):
     def set_balance_window(self):
         self.view = ViewBalance(self.parent_controller.atm_window.mid_frame)
         super().set_current_window(self.view)
-        self.view.show_balance(self.parent_controller.account_db['balance'])
