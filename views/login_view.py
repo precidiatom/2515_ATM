@@ -26,19 +26,19 @@ class LoginWindow:
         self.mainframe = tk.Frame(self.mid_frame)
 
         self.user_id_label = tk.Label(self.mid_frame, text="User ID:", font=COMICFONT)
-        self.user_id_label.grid(row=2, column=0, sticky="W")
+        self.user_id_label.grid(row=1, column=0, sticky="W")
         self.user_id = tk.Entry(self.mid_frame, width=30)
 
         self.user_pin_label = tk.Label(self.mid_frame, text="PIN:", font=COMICFONT)
-        self.user_pin_label.grid(row=4, column=0, sticky="W")
+        self.user_pin_label.grid(row=3, column=0, sticky="NW")
         self.user_pin = tk.Entry(self.mid_frame, show="*", width=10)
         self.user_pin.config(show="*")
 
         self.creditentials_butt = tk.Button(self.mid_frame, text="Submit", font=COMICSMALLER, bg="yellow")
         self.creditentials_butt.grid(row=6, column=0)
 
-        self.user_id.grid(row=3, column=0, padx=88, pady=10)
-        self.user_pin.grid(row=5, column=0, padx=88, pady=10)
+        self.user_id.grid(row=2, column=0, padx=88, pady=10)
+        self.user_pin.grid(row=4, column=0, padx=88, pady=10)
 
         self.exit_button = tk.Button(self.bot_frame, text='Exit', width=20, font=COMICSMALLER,
                                      command=lambda: root.destroy())

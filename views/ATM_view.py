@@ -41,9 +41,12 @@ class MainWindow:
         self.deposit_button.grid(row=4, column=1, padx=25, pady=10)
         self.withdraw_button.grid(row=5, column=1, padx=25, pady=10)
 
-        self.exit_button = tk.Button(self.bot_frame, text='Exit', width=20,
+        self.logout_button = tk.Button(self.bot_frame, text="Log Out", width=15)
+        self.logout_button.grid(row=8, column=5)
+
+        self.exit_button = tk.Button(self.bot_frame, text='Exit', width=15,
                                      command=lambda: root.destroy())
-        self.exit_button.grid(row=8, column=5)
+        self.exit_button.grid(row=8, column=0)
 
         self.current_frame = self.mainframe
 
