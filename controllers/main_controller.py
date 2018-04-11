@@ -1,6 +1,6 @@
-from controllers.DepositController import DepositController
-from controllers.ViewBalanceController import ViewBalanceController
-from controllers.WithdrawController import WithdrawController
+from controllers.deposit_controller import DepositController
+from controllers.view_balance_controller import ViewBalanceController
+from controllers.withdraw_controller import WithdrawController
 from models.account import Account
 from views.ATM_view import MainWindow
 
@@ -18,6 +18,7 @@ class MainController:
         self.atm_deposit_controller = DepositController(self)
         self.atm_withdraw_controller = WithdrawController(self)
 
+        #self.atm_window.chequing_but.config(command=DepositController.parent_controller)
         # self.atm_deposit_window = ViewDeposit(self.atm_window.mid_frame, self).grid(row=1, padx=150, pady=55)
         # self.atm_withdrawal_window = ViewWithdraw(self.atm_window.mid_frame, self).grid(row=1, padx=300, pady=55)
 

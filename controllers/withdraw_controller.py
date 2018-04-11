@@ -1,5 +1,5 @@
-from controllers.ChildController import ChildController
-from views.WithdrawView import ViewWithdraw
+from controllers.child_controller import ChildController
+from views.withdraw_view import ViewWithdraw
 
 
 class WithdrawController(ChildController):
