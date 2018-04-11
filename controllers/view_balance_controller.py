@@ -1,5 +1,5 @@
-from controllers.ChildController import ChildController
-from views.BalanceView import ViewBalance
+from controllers.child_controller import ChildController
+from views.balance_view import ViewBalance
 
 
 class ViewBalanceController(ChildController):
