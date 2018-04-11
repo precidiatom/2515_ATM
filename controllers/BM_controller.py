@@ -29,10 +29,9 @@ class BMController:
                 view_user_info = self.session.view_user_info_inputs()
 
         elif action == '4' or action == '5':
-            view_acc_info = self.session.view_acc_info_inputs()
-            # while not self._get_account_info(view_acc_info):
-            #     view_acc_info = self.session.view_acc_info_inputs()
-            self._get_account_info(view_acc_info)
+            view_acc_info = self.session.view_acc_info_for_user_input()
+            while not self._get_account_info(view_acc_info, action):
+                view_acc_info = self.session.view_acc_info_for_user_input()
 
         elif action == '6':
             self.session.delete_user_inputs()
@@ -79,16 +78,25 @@ class BMController:
     def _get_logs_for_account(self):
         self.session.output({}, self.account['transaction_log'])
 
-    def _get_account_info(self, user_id):
-        accounts = dict(Account.get_account_info_for_user(user_id))
-        # del accounts['transaction_log']
-        self.session.output(accounts)
+    def _get_account_info(self, user_id, action=''):
+        if User.check_valid_user(user_id):
+            accounts_info = dict(Account.get_account_info_for_user(user_id))
+            if action == '4':
+                for v in accounts_info.values():
+                    del v['transaction_log']
+            self.session.output(accounts_info)
+            return True
+        else:
+            self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
+            return False
 
     def _get_user_info(self, userid):
         if User.check_valid_user(userid):
-            user = dict(User.get_persist_user_obj(userid))
-            del user['pin']
-            self.session.output(user)
+            self.session.output({
+                'user_id': User.get_persist_user_obj(userid)['user_id'],
+                'user_name': User.get_persist_user_obj(userid)['user_name'],
+                'user_type': User.get_persist_user_obj(userid)['user_type']
+            })
             return True
         else:
             self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')

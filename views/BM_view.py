@@ -26,8 +26,8 @@ class CommandInterface:
         print('1 - Create a user')
         print('2 - Create an account for an user\n')
         print('3 - View info for a user')
-        print('4 - View info for an account')
-        print('5 - View transaction logs for an account\n')
+        print('4 - View account info for a user')
+        print('5 - View transaction logs for a user\n')
         print('6 - Delete a user')
         print('7 - Delete an account')
 
@@ -70,10 +70,9 @@ class CommandInterface:
         self.view_user_info_for = input('Enter the user ID you want to view info for: ')
         return self.view_user_info_for
 
-    def view_acc_info_inputs(self, action):
+    def view_acc_info_for_user_input(self):
         self.view_acc_info_for = input('Enter the user ID of the account holder: ')
-        self.view_acc_num = input('Enter the account number you want to view the info for: ')
-        self.view_logs_for = self.view_acc_info_for if action == '5' else None
+        return self.view_acc_info_for
 
     def delete_acc_inputs(self):
         self.delete_acc_for = input('Enter the user ID of the account holder: ')
