@@ -33,11 +33,11 @@ class Account:
 
     @staticmethod
     def get_persist_account(userid, acc_number):
-        return open(data_abs_path + '\\' + str(userid) + str(acc_number) + '.db')
+        return open('{}\\{}\\{}.db'.format(data_abs_path, str(userid), str(userid) + str(acc_number)))
 
     @staticmethod
     def delete_account(userid, acc_number):
-        for acc_file in glob(data_abs_path + '\\' + str(userid) + str(acc_number) + '.db.*'):
+        for acc_file in glob('{}\\{}\\{}.db.*'.format(data_abs_path, str(userid), str(userid) + str(acc_number))):
             remove(acc_file)
 
     @staticmethod
