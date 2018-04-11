@@ -1,11 +1,7 @@
-from controllers.deposit_controller import DepositController
-from controllers.view_balance_controller import ViewBalanceController
-from controllers.withdraw_controller import WithdrawController
-from models.account import Account
-from views.ATM_view import MainWindow
-from views.login_view import LoginWindow
-from models.user import User
 from controllers.main_controller import MainController
+from models.user import User
+from views.login_view import LoginWindow
+
 
 class LoginController:
     def __init__(self, master, account):
@@ -46,4 +42,3 @@ class LoginController:
 
     def _redirect(self):
         pass
-

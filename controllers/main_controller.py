@@ -1,11 +1,11 @@
+from controllers.child_controller import ChildController
 from controllers.deposit_controller import DepositController
 from controllers.view_balance_controller import ViewBalanceController
 from controllers.withdraw_controller import WithdrawController
-from models.account import Account
 from models.user import User
 from views.ATM_view import MainWindow
 from views.login_view import LoginWindow
-from controllers.child_controller import ChildController
+
 
 class MainController(ChildController):
     def __init__(self, master, user_id, parent_controller):
@@ -19,7 +19,7 @@ class MainController(ChildController):
         self.atm_deposit_controller = DepositController(self)
         self.atm_withdraw_controller = WithdrawController(self)
 
-        #self.atm_window.chequing_but.config(command=DepositController.parent_controller)
+        # self.atm_window.chequing_but.config(command=DepositController.parent_controller)
 
         self._refresh_window()
 
@@ -31,7 +31,6 @@ class MainController(ChildController):
         self.atm_window.withdraw_button.config(command=self._view_withdraw)
         self.atm_window.deposit_button.config(command=self._view_deposit)
         self.atm_window.logout_button.config(command=self._view_login)
-
 
     def set_current_frame(self, frame):
         self.atm_window.current_frame = frame

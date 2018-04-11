@@ -10,30 +10,37 @@ from models.user import User
 class Account:
     def __init__(self, userid, account_type='Default', balance=0.0, fee=0.0, interest=0.0):
         self.balance = float(balance)
+        self.account_type = account_type
 
         self.user = User.get_persist_user_obj(userid)
         self.account_number = app_data['NEXT_ACC_NUM']
+        self.user[account_type] = {
+            'account_num': self.account_number,
+            'balance': self.balance,
+            'transaction_log': ''
+        }
+
         self.fee = float(fee)
         self.interest = float(interest)
         self.transaction_log = TransactionLog(self, balance)
+        #
+        # self.acc_file = Account.get_persist_account(userid, self.account_number)
+        # self.acc_file['holder_name'] = self.user['user_name']
+        # self.acc_file['account_num'] = self.account_number
+        # self.acc_file['account_type'] = account_type
+        # self.acc_file['balance'] = self.balance
 
-        self.acc_file = Account.get_persist_account(userid, self.account_number)
-        self.acc_file['holder_name'] = self.user['user_name']
-        self.acc_file['account_num'] = self.account_number
-        self.acc_file['account_type'] = account_type
-        self.acc_file['balance'] = self.balance
-
-        self.acc_file['transaction_log'] = '\n[Transacton log for ' + self.user['user_name'] + ' #' + str(
+        self.user[account_type]['transaction_log'] = '\n[Transacton log for ' + self.user['user_name'] + ' #' + str(
             self.account_number) + ']' + '\n'
-        self.acc_file[
+        self.user[account_type][
             'transaction_log'] += '-------------------------------------------------------------------------------\n'
-        self.acc_file['transaction_log'] += self.transaction_log.transactions[0].get_transaction_str()
+        self.user[account_type]['transaction_log'] += self.transaction_log.transactions[0].get_transaction_str()
 
         app_data['NEXT_ACC_NUM'] = ''.join(choice('0123456789') for i in range(4))
 
-    @staticmethod
-    def get_persist_account(userid, acc_number):
-        return open('{}\\{}\\{}.db'.format(data_abs_path, str(userid), str(userid) + str(acc_number)))
+    # @staticmethod
+    # def get_persist_account(userid, acc_number):
+    #     return open('{}\\{}\\{}.db'.format(data_abs_path, str(userid), str(userid) + str(acc_number)))
 
     @staticmethod
     def delete_account(userid, acc_number):
@@ -41,14 +48,18 @@ class Account:
             remove(acc_file)
 
     @staticmethod
-    def login(acc_num, pin):
-        return Account.get_persist_account(acc_num)['pin'] == pin
+    def get_account_info_for_user(userid):
+        results = []
+        for k, v in User.get_persist_user_obj(userid):
+            if 'account' in k:
+                results.append((k, v))
+        return results
 
     def get_info(self):
         return {
             "account_holder": self.user['user_name'],
             "account_number": self.account_number,
-            "account_type": self.acc_file['account_type'],
+            "account_type": self.account_type,
             "balance": "$" + str(self.balance)
         }
 

@@ -11,48 +11,32 @@ class BMController:
         self.session = CommandInterface()
         while not self._login():
             self.session = CommandInterface()
-
         self._navigate_mainmenu(self.session.main_menu())
-
-        # user_pin_created = False
-        # while not user_pin_created:
-        #     user_pin_created = self.session.create_pin('user')
-        # self._create_user()
-        #
-        # if self.session.new_acc:
-        #     self._create_account()
-        #
-        # if self.session.delete_user:
-        #     self._delete_user()
-        #
-        # if self.session.delete_acc_for and self.session.delete_account:
-        #     self._delete_account()
-        #
-        # if self.session.view_user_info_for:
-        #     self._get_user_info()
-        #
-        # if self.session.view_acc_info_for and self.session.view_acc_num:
-        #     self.account = Account.get_persist_account(self.session.view_acc_info_for, self.session.view_acc_num)
-        #     self._get_account_info()
-        #     if self.session.view_logs_for:
-        #         self._get_logs_for_account()
 
     def _navigate_mainmenu(self, action):
         if action == '1':
             new_user = self.session.create_user_inputs()
             self._create_user(new_user)
+
         elif action == '2':
             new_account = self.session.create_account_inputs()
             while not self._create_account(new_account):
                 new_account = self.session.create_account_inputs()
+
         elif action == '3':
             view_user_info = self.session.view_user_info_inputs()
             while not self._get_user_info(view_user_info):
                 view_user_info = self.session.view_user_info_inputs()
+
         elif action == '4' or action == '5':
-            self.session.view_acc_info_inputs(action)
+            view_acc_info = self.session.view_acc_info_inputs()
+            # while not self._get_account_info(view_acc_info):
+            #     view_acc_info = self.session.view_acc_info_inputs()
+            self._get_account_info(view_acc_info)
+
         elif action == '6':
             self.session.delete_user_inputs()
+
         elif action == '7':
             self.session.delete_acc_inputs()
 
@@ -95,10 +79,10 @@ class BMController:
     def _get_logs_for_account(self):
         self.session.output({}, self.account['transaction_log'])
 
-    def _get_account_info(self):
-        account = dict(self.account)
-        del account['transaction_log']
-        self.session.output(account)
+    def _get_account_info(self, user_id):
+        accounts = dict(Account.get_account_info_for_user(user_id))
+        # del accounts['transaction_log']
+        self.session.output(accounts)
 
     def _get_user_info(self, userid):
         if User.check_valid_user(userid):
