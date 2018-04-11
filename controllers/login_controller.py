@@ -4,12 +4,14 @@ from controllers.withdraw_controller import WithdrawController
 from models.account import Account
 from views.ATM_view import MainWindow
 from views.login_view import LoginWindow
+from models.user import User
 
 class LoginController:
     def __init__(self, master, account):
         self.master = master
-        self.account_db = Account.get_persist_account(account.user['user_id'], account.account_number)
+        self.account_db = None
         self.atm_window = LoginWindow(self.master)
+        self.atm_window.creditentials_butt.config(command=self._check_credentials)
 
         self._refresh_window()
 
@@ -19,12 +21,18 @@ class LoginController:
     def set_current_frame(self, frame):
         self.atm_window.current_frame = frame
 
-    def _confirm_pin(self, account_num, pin):
-        if Account.login(account_num, pin):
-            self.account_db = Account.get_persist_account(account_num)
+    def _confirm_pin(self, user_id, pin):
+        if User.login(user_id, pin):
+            self.user = User.get_persist_user_obj(user_id)
+
 
     def _refresh_window(self):
         pass
 
     def _view_login(self):
         self.atm_window = LoginWindow(self.master)
+
+    def _check_credentials(self):
+        user_account = self.atm_window.user_id.get()
+        pin_inp = self.atm_window.user_pin.get()
+        self._confirm_pin(user_account, pin_inp)
