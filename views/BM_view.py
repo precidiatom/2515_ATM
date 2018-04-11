@@ -93,9 +93,9 @@ class CommandInterface:
 
     def _resolve_account_type(self, num):
         if str(num) == '1':
-            return 'chequing'
+            return 'chequing_account'
         elif str(num) == '2':
-            return 'saving'
+            return 'saving_account'
         else:
             self.output({'error': 'invalid account type'})
             self.choose_account_inputs()

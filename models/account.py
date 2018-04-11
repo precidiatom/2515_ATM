@@ -8,7 +8,7 @@ from models.user import User
 
 
 class Account:
-    def __init__(self, userid, account_type='Default', balance=0.0, fee=0.0, interest=0.0):
+    def __init__(self, userid, account_type='Default', balance=0.0):
         self.balance = float(balance)
         self.account_type = account_type
 
@@ -23,8 +23,6 @@ class Account:
                                                                            self.account_number)
         }
 
-        # self.fee = float(fee)
-        # self.interest = float(interest)
         self.transaction_log = TransactionLog(self.user[account_type], balance)
 
         self.user[account_type][
