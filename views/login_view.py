@@ -1,12 +1,9 @@
 import tkinter as tk
 
-# from views.view_balance_frame import ViewBalance
-
 COMICFONT = "Comic Sans MS", 14
 COMICSMALLER = "Comic Sans MS", 8
 
-
-class MainWindow:
+class LoginWindow:
     def __init__(self, root):
         self.root = root
 
@@ -23,11 +20,9 @@ class MainWindow:
         self.mid_frame.grid(row=1, padx=150, pady=50)
         self.bot_frame.grid(row=4, padx=150, pady=30)
 
-        # Header
         self.welcome = tk.Label(self.top_frame, text='Welcome to Meowmeow Bank', font=COMICFONT)
         self.welcome.grid(row=0, column=0)
 
-        # Main screen frame
         self.mainframe = tk.Frame(self.mid_frame)
 
         self.user_id_label = tk.Label(self.mid_frame, text="User ID:", font=COMICFONT)
@@ -57,5 +52,5 @@ class MainWindow:
 
 if __name__ == "__main__":
     root = tk.Tk()
-    MainWindow(root)
+    LoginWindow(root)
     tk.mainloop()
