@@ -11,7 +11,7 @@ class LoginController:
         self.master = master
         self.account_db = None
         self.atm_window = LoginWindow(self.master)
-        self.atm_window.creditentials_butt.config(command=self._check_credentials)
+        self.atm_window.credentials_butt.config(command=self._check_credentials)
 
         self._refresh_window()
 
@@ -24,7 +24,11 @@ class LoginController:
     def _confirm_pin(self, user_id, pin):
         if User.login(user_id, pin):
             self.user = User.get_persist_user_obj(user_id)
+            #self.atm_window = MainWindow(self.master)
+        else:
+            self.atm_window.fail_login()
 
+        print('yabai', User.login(user_id, pin))
 
     def _refresh_window(self):
         pass
@@ -36,3 +40,7 @@ class LoginController:
         user_account = self.atm_window.user_id.get()
         pin_inp = self.atm_window.user_pin.get()
         self._confirm_pin(user_account, pin_inp)
+
+    def _redirect(self):
+        pass
+

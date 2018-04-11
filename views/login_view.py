@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 COMICFONT = "Comic Sans MS", 14
 COMICSMALLER = "Comic Sans MS", 8
@@ -34,8 +35,8 @@ class LoginWindow:
         self.user_pin = tk.Entry(self.mid_frame, show="*", width=10)
         self.user_pin.config(show="*")
 
-        self.creditentials_butt = tk.Button(self.mid_frame, text="Submit", font=COMICSMALLER, bg="yellow")
-        self.creditentials_butt.grid(row=6, column=0)
+        self.credentials_butt = tk.Button(self.mid_frame, text="Submit", font=COMICSMALLER, bg="yellow")
+        self.credentials_butt.grid(row=6, column=0)
 
         self.user_id.grid(row=2, column=0, padx=88, pady=10)
         self.user_pin.grid(row=4, column=0, padx=88, pady=10)
@@ -49,6 +50,8 @@ class LoginWindow:
     def set_main_frame(self):
         self.mainframe.grid(row=1, padx=150, pady=55)
 
+    def fail_login(self):
+        tk.messagebox.showerror("Incorrect account", "You have entered invalid user id or pin")
 
 if __name__ == "__main__":
     root = tk.Tk()

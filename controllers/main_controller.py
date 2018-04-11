@@ -2,16 +2,17 @@ from controllers.deposit_controller import DepositController
 from controllers.view_balance_controller import ViewBalanceController
 from controllers.withdraw_controller import WithdrawController
 from models.account import Account
+from models.user import User
 from views.ATM_view import MainWindow
 from views.login_view import LoginWindow
 
 
 class MainController:
-    def __init__(self, master, account):
+    def __init__(self, master, user):
         self.master = master
-        self.account_db = Account.get_persist_account(account.user['user_id'], account.account_number)
+        #self.user = User()
         self.atm_window = MainWindow(self.master)
-        self.atm_window.welcome_value.config(text=self.account_db['holder_name'])
+        self.atm_window.welcome_value.config(text=self.user.user_name['user_name'])
         self.atm_window.balance_button.config(command=self._view_balance)
         self.atm_window.withdraw_button.config(command=self._view_withdraw)
         self.atm_window.deposit_button.config(command=self._view_deposit)
@@ -29,10 +30,6 @@ class MainController:
 
     def set_current_frame(self, frame):
         self.atm_window.current_frame = frame
-
-    def _confirm_pin(self, account_num, pin):
-        if Account.login(account_num, pin):
-            self.account_db = Account.get_persist_account(account_num)
 
     def _view_balance(self):
         self.atm_balance_controller.set_balance_window()
