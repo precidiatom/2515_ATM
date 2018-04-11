@@ -39,9 +39,12 @@ class User:
                     )
 
     @staticmethod
-    def login(userid, pin):
-        return User._check_valid_user(userid) and 'pin' in User.get_persist_user_obj(userid).keys() and \
-               str(User.get_persist_user_obj(userid)['pin']) == str(pin)
+    def login(userid, pin, user_type):
+        valid_user = User._check_valid_user(userid)
+        valid_pin = str(User.get_persist_user_obj(userid)['pin']) == str(pin)
+        teller_access = User.teller_access(userid) if user_type == 'teller' else True
+
+        return valid_user and valid_pin and teller_access
 
     @staticmethod
     def teller_access(userid):

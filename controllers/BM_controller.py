@@ -54,8 +54,7 @@ class BMController:
             self.session.delete_acc_inputs()
 
     def _login(self):
-        if User.login(self.session.teller_id, self.session.teller_pin) and User.teller_access(self.session.teller_id):
-            self.session.output({}, 'Login successful\n')
+        if User.login(self.session.teller_id, self.session.teller_pin, 'teller'):
             return True
         else:
             self.session.output({'authentication_failure': 'wrong ID or PIN\n'}, '[ Login failed ]')
@@ -63,7 +62,6 @@ class BMController:
 
     def _create_user(self, new_user):
         new_user = User(new_user['user_name'], new_user['pin'], 'customer')
-        print(new_user.user_name)
         self.session.output(new_user.get_user_info(), '\n[ New user created ]')
 
     def _delete_user(self):
