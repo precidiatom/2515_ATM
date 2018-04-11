@@ -29,7 +29,11 @@ class User:
 
     @staticmethod
     def delete_user(userid):
-        rmtree('{}\\{}\\'.format(data_abs_path, str(userid)))
+        if User.check_valid_user(userid):
+            rmtree('{}\\{}\\'.format(data_abs_path, str(userid)))
+            return True
+        else:
+            return False
 
     @staticmethod
     def get_persist_user_obj(userid):
@@ -39,17 +43,17 @@ class User:
                     )
 
     @staticmethod
-    def login(userid, pin, user_type):
-        valid_user = User._check_valid_user(userid)
-        valid_pin = str(User.get_persist_user_obj(userid)['pin']) == str(pin)
-        teller_access = User.teller_access(userid) if user_type == 'teller' else True
-
-        return valid_user and valid_pin and teller_access
+    def login(userid, pin, user_type=''):
+        if User.check_valid_user(userid) and str(User.get_persist_user_obj(userid)['pin']) == str(pin):
+            if user_type == 'teller':
+                return User.teller_access(userid)
+        else:
+            return False
 
     @staticmethod
     def teller_access(userid):
         return User.get_persist_user_obj(userid)['user_type'] == 'teller'
 
     @staticmethod
-    def _check_valid_user(userid):
-        return path.exists('{}\\{}\\'.format(data_abs_path, str(userid)))
+    def check_valid_user(userid):
+        return len(str(userid)) > 0 and path.exists('{}\\{}\\'.format(data_abs_path, str(userid)))

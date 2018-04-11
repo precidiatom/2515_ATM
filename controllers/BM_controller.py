@@ -1,7 +1,6 @@
 from models.account import Account
 from models.chequing_account import ChequingAccount
 from models.saving_account import SavingAccount
-from models.term_saving_account import TermSavingAccount
 from models.user import User
 from views.BM_view import CommandInterface
 
@@ -43,9 +42,13 @@ class BMController:
             new_user = self.session.create_user_inputs()
             self._create_user(new_user)
         elif action == '2':
-            self.session.create_account_inputs()
+            new_account = self.session.create_account_inputs()
+            while not self._create_account(new_account):
+                new_account = self.session.create_account_inputs()
         elif action == '3':
-            self.session.view_user_info_inputs()
+            view_user_info = self.session.view_user_info_inputs()
+            while not self._get_user_info(view_user_info):
+                view_user_info = self.session.view_user_info_inputs()
         elif action == '4' or action == '5':
             self.session.view_acc_info_inputs(action)
         elif action == '6':
@@ -73,17 +76,21 @@ class BMController:
         self.session.output(
             {'deleted': 'Account #{} for user {}'.format(self.session.delete_account, self.session.delete_acc_for)})
 
-    def _create_account(self):
-        new_account = None
-        if self.session.new_acc['account_type'] == 'chequing':
-            new_account = ChequingAccount(self.session.new_acc['account_holder'])
-        elif self.session.new_acc['account_type'] == 'saving':
-            new_account = SavingAccount(self.session.new_acc['account_holder'])
-        elif self.session.new_acc['account_type'] == 'term_saving':
-            new_account = TermSavingAccount(self.session.new_acc['account_holder'])
+    def _create_account(self, new_account):
+        new_account_created = None
+        if User.check_valid_user(new_account['account_holder']):
+            if new_account['account_type'] == 'chequing':
+                new_account_created = ChequingAccount(new_account['account_holder'])
+            elif new_account['account_type'] == 'saving':
+                new_account_created = SavingAccount(self.session.new_acc['account_holder'])
 
-        self.session.output(new_account.get_info(),
-                            '\n[ New account created for user {} ]'.format(self.session.new_acc['account_holder']))
+            self.session.output(new_account_created.get_info(),
+                                '\n[ New account created for user {} ]'.format(new_account['account_holder']))
+            return True
+        else:
+            self.session.output({'invalid_account_holder': 'please enter valid account holder id\n'},
+                                '\n[ USER ID ERROR ]')
+            return False
 
     def _get_logs_for_account(self):
         self.session.output({}, self.account['transaction_log'])
@@ -93,10 +100,15 @@ class BMController:
         del account['transaction_log']
         self.session.output(account)
 
-    def _get_user_info(self):
-        user = dict(User.get_persist_user_obj(self.session.view_user_info_for))
-        del user['pin']
-        self.session.output(user)
+    def _get_user_info(self, userid):
+        if User.check_valid_user(userid):
+            user = dict(User.get_persist_user_obj(userid))
+            del user['pin']
+            self.session.output(user)
+            return True
+        else:
+            self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
+            return False
 
 
 if __name__ == '__main__':
