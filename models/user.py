@@ -1,7 +1,7 @@
-from glob import glob
-from os import remove
+from os import path, makedirs
 from random import choice
 from shelve import open
+from shutil import rmtree
 
 from models.constants import app_data, data_abs_path
 
@@ -30,13 +30,14 @@ class User:
 
     @staticmethod
     def delete_user(userid):
-        for user_file in glob(data_abs_path + '\\' + str(userid) + '*.db.*'):
-            remove(user_file)
+        rmtree('{}\\{}\\'.format(data_abs_path, str(userid)))
 
     @staticmethod
     def get_persist_user_obj(userid):
-        return open(data_abs_path + '\\' + str(userid) + '.db')
-
+        if not path.exists('{}\\{}\\'.format(data_abs_path, str(userid))):
+            makedirs('{}\\{}\\'.format(data_abs_path, str(userid)))
+        return open('{}\\{}\\{}.db'.format(data_abs_path, str(userid), str(userid))
+                    )
     @staticmethod
     def login(userid, pin):
         return 'pin' in User.get_persist_user_obj(userid).keys() and \
@@ -45,3 +46,7 @@ class User:
     @staticmethod
     def teller_access(userid):
         return User.get_persist_user_obj(userid)['user_type'] == 'teller'
+
+    @staticmethod
+    def check_valid_user(userid):
+        return path.exists(data_abs_path + '\\' + str(userid) + '\\')
