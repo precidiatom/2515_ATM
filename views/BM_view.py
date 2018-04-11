@@ -38,22 +38,22 @@ class CommandInterface:
         self.new_user['user_name'] = input('\nEnter the first and last name of the user: ')
 
         if len(self.new_user['user_name']) > 0:
-            return self.create_pin(self.new_user)
+            return self.create_pin()
         else:
             self.output({'error': 'please enter valid user name'})
             return self.create_user_inputs()
 
-    def create_pin(self, obj):
-        obj['pin'] = input('\nCreate PIN: ')
-        if len(obj['pin']) > 0:
-            return obj
+    def create_pin(self):
+        self.new_user['pin'] = input('Create PIN: ')
+        if len(self.new_user['pin']) > 0:
+            return self.new_user
         else:
             self.output({'error': 'please enter valid PIN'})
-            return self.create_pin(obj)
+            return self.create_pin()
 
     def create_account_inputs(self):
         self.new_acc['account_holder'] = input('User ID of account holder: ')
-        self.choose_account_inputs()
+        return self.choose_account_inputs()
 
     def choose_account_inputs(self):
         print('\nWhat kind of account would you like to create?')
@@ -62,11 +62,13 @@ class CommandInterface:
         print('2 - Saving Account')
         print('3 - Term Saving Account')
         account_type = input()
-        self.new_acc['account_type'] = CommandInterface._resolve_account_type(account_type)
-        self.create_pin(self.new_acc)
+
+        self.new_acc['account_type'] = self._resolve_account_type(account_type)
+        return self.new_acc
 
     def view_user_info_inputs(self):
         self.view_user_info_for = input('Enter the user ID you want to view info for: ')
+        return self.view_user_info_for
 
     def view_acc_info_inputs(self, action):
         self.view_acc_info_for = input('Enter the user ID of the account holder: ')
@@ -86,11 +88,11 @@ class CommandInterface:
         for k, v in obj.items():
             print('{}: {}'.format(k.replace('_', ' ').upper(), v))
 
-    @staticmethod
-    def _resolve_account_type(num):
+    def _resolve_account_type(self, num):
         if str(num) == '1':
             return 'chequing'
         elif str(num) == '2':
             return 'saving'
-        elif str(num) == '3':
-            return 'term_saving'
+        else:
+            self.output({'error': 'invalid account type'})
+            self.choose_account_inputs()
