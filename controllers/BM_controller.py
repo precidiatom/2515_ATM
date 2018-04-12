@@ -32,10 +32,17 @@ class BMController:
                 view_acc_info = self.session.view_acc_info_for_user_input()
 
         elif action == '6':
-            self.session.delete_user_inputs()
-
+            delete_user = self.session.delete_user_inputs()
+            while not self._delete_user(delete_user):
+                delete_user = self.session.delete_user_inputs()
         elif action == '7':
-            self.session.delete_acc_inputs()
+            delete_cheq_acc = self.session.delete_cheq_acc_inputs()
+            while not self._delete_cheq_acc(delete_cheq_acc):
+                delete_cheq_acc = self.session.delete_cheq_acc_inputs()
+        elif action == '8':
+            delete_sav_acc = self.session.delete_sav_acc_inputs()
+            while not self._delete_sav_acc(delete_sav_acc):
+                delete_sav_acc = self.session.delete_sav_acc_inputs()
 
     def _login(self):
         if User.login(self.session.teller_id, self.session.teller_pin, 'teller'):
@@ -48,22 +55,47 @@ class BMController:
         new_user = User(new_user['user_name'], new_user['pin'], 'customer')
         self.session.output(new_user.get_user_info(), '\n[ New user created ]')
 
-    def _delete_user(self):
-        User.delete_user(self.session.delete_user)
-        self.session.output({'deleted': 'user {} and their related accounts'.format(self.session.delete_user)})
+    def _delete_user(self, user):
+        if User.delete_user(user):
+            self.session.output({'deleted': 'user {} and their related accounts'.format(user)})
+            return True
+        else:
+            self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to delete user ]')
+            return False
 
-    def _delete_account(self):
-        Account.delete_account(self.session.delete_acc_for, self.session.delete_account)
-        self.session.output(
-            {'deleted': 'Account #{} for user {}'.format(self.session.delete_account, self.session.delete_acc_for)})
+    def _delete_cheq_acc(self, userid):
+        if userid == 'b':
+            self._navigate_mainmenu(1)
+        if Account.delete_account(userid, 'chequing_account'):
+            self.session.output(
+                {'deleted': 'Chequing account deleted for user {}'.format(userid)})
+            return True
+        else:
+            self.session.output({'Error': 'Please re-enter user id or press \'b\' to return to main menu!\n'},
+                                '[ Invalid user ID or selected account does not exist ]')
+            return False
+
+    def _delete_sav_acc(self, userid):
+        if userid == 'b':
+            self._navigate_mainmenu(1)
+        if Account.delete_account(userid, 'saving_account'):
+            self.session.output(
+                {'deleted': 'Saving account deleted for user {}'.format(userid)})
+            return True
+        else:
+            self.session.output({'Error': 'Invalid user ID or selected account does not exist!\n'},
+                                '[ Fail to delete account ]')
+            return False
 
     def _create_account(self, new_account):
+        if new_account == 'b':
+            self._navigate_mainmenu(1)
         if User.check_valid_user(new_account['account_holder']):
             if new_account['account_type'] in Account.get_account_info_for_user(new_account['account_holder']).keys():
                 self.session.output({
                     'error':
                         'user already has an account of this type. select another one '
-                        'or press \'q\' to return to main menu.\n'}, '[ INVALID ACCOUNT TYPE ERROR ]')
+                        'or press \'b\' to return to main menu.\n'}, '[ INVALID ACCOUNT TYPE ERROR ]')
                 return False
             else:
                 new_account_created = Account(new_account['account_holder'], new_account['account_type'],
@@ -76,37 +108,31 @@ class BMController:
                                 '\n[ USER ID ERROR ]')
             return False
 
+    def _get_account_info(self, user_id, action=''):
+        if User.check_valid_user(user_id):
+            accounts_info = dict(Account.get_account_info_for_user(user_id))
+            transaction_logs = ''
+            for v in accounts_info.values():
+                if action == '5':
+                    transaction_logs = v['transaction_log']
+                del v['transaction_log']
+            self.session.output(accounts_info, transaction_logs)
+            return True
+        else:
+            self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
+            return False
 
-def _get_logs_for_account(self):
-    self.session.output({}, self.account['transaction_log'])
-
-
-def _get_account_info(self, user_id, action=''):
-    if User.check_valid_user(user_id):
-        accounts_info = dict(Account.get_account_info_for_user(user_id))
-        transaction_logs = ''
-        for v in accounts_info.values():
-            if action == '5':
-                transaction_logs = v['transaction_log']
-            del v['transaction_log']
-        self.session.output(accounts_info, transaction_logs)
-        return True
-    else:
-        self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
-        return False
-
-
-def _get_user_info(self, userid):
-    if User.check_valid_user(userid):
-        self.session.output({
-            'user_id': User.get_persist_user_obj(userid)['user_id'],
-            'user_name': User.get_persist_user_obj(userid)['user_name'],
-            'user_type': User.get_persist_user_obj(userid)['user_type']
-        })
-        return True
-    else:
-        self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
-        return False
+    def _get_user_info(self, userid):
+        if User.check_valid_user(userid):
+            self.session.output({
+                'user_id': User.get_persist_user_obj(userid)['user_id'],
+                'user_name': User.get_persist_user_obj(userid)['user_name'],
+                'user_type': User.get_persist_user_obj(userid)['user_type']
+            })
+            return True
+        else:
+            self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
+            return False
 
 
 if __name__ == '__main__':

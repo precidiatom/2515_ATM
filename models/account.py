@@ -1,5 +1,3 @@
-from glob import glob
-from os import remove
 from random import choice
 
 from models.constants import *
@@ -36,9 +34,12 @@ class Account:
         User.get_persist_user_obj(userid).update(self.user)
 
     @staticmethod
-    def delete_account(userid, acc_number):
-        for acc_file in glob('{}\\{}\\{}.db.*'.format(data_abs_path, str(userid), str(userid) + str(acc_number))):
-            remove(acc_file)
+    def delete_account(userid, acc_type):
+        if User.check_valid_user(userid) and acc_type in User.get_persist_user_obj(userid).keys():
+            del User.get_persist_user_obj(userid)[acc_type]
+            return True
+        else:
+            return False
 
     @staticmethod
     def get_account_info_for_user(userid):

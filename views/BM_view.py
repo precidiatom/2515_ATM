@@ -11,8 +11,8 @@ class CommandInterface:
         self.view_acc_info_for = None
         self.view_acc_num = None
         self.delete_user = None
-        self.delete_acc_for = None
-        self.delete_account = None
+        self.delete_cheq_acc_for = None
+        self.delete_sav_acc_for = None
 
         self.actions_list = [str(i) for i in range(1, 8)]
 
@@ -29,7 +29,8 @@ class CommandInterface:
         print('4 - View account info for a user')
         print('5 - View transaction logs for a user\n')
         print('6 - Delete a user')
-        print('7 - Delete an account')
+        print('7 - Delete a chequing account')
+        print('8 - Delete a saving account')
 
         self.action = input()
         return self.action if self.action in self.actions_list else self.main_menu(failed=True)
@@ -78,12 +79,17 @@ class CommandInterface:
         self.view_acc_info_for = input('Enter the user ID of the account holder: ')
         return self.view_acc_info_for
 
-    def delete_acc_inputs(self):
-        self.delete_acc_for = input('Enter the user ID of the account holder: ')
-        self.delete_account = input('Enter the account number you want to delete: ')
+    def delete_cheq_acc_inputs(self):
+        self.delete_cheq_acc_for = input('Enter the user ID of the account holder: ')
+        return self.delete_cheq_acc_for
+
+    def delete_sav_acc_inputs(self):
+        self.delete_sav_acc_for = input('Enter the user ID of the account holder: ')
+        return self.delete_sav_acc_for
 
     def delete_user_inputs(self):
         self.delete_user = input('Enter the ID for the user you want to delete: ')
+        return self.delete_user
 
     @staticmethod
     def output(obj, msg=''):
