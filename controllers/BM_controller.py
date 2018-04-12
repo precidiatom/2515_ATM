@@ -45,6 +45,12 @@ class BMController:
                 delete_sav_acc = self.session.delete_sav_acc_inputs()
 
     def _login(self):
+        """
+        Authenticates the user account by checking if the user id and pin match with the information stored.
+
+        :return: True if the input user id matches the database user id
+                False if do not match
+        """
         if User.login(self.session.teller_id, self.session.teller_pin, 'teller'):
             return True
         else:
@@ -52,10 +58,23 @@ class BMController:
             return False
 
     def _create_user(self, new_user):
+        """
+        Creates new customer using the User class as the parameter
+
+        :param new_user: User class which requires: user's name, pin, and user-type
+        :return: user id and creates a folder for the user in the model
+        """
         new_user = User(new_user['user_name'], new_user['pin'], 'customer')
         self.session.output(new_user.get_user_info(), '\n[ New user created ]')
 
     def _delete_user(self, user):
+        """
+        Deletes an existing user from the model.
+
+        :param user: the User object that will be deleted
+        :return: True if user exists in the model
+            False if the input user id does not exist in the model
+        """
         if User.delete_user(user):
             self.session.output({'deleted': 'user {} and their related accounts'.format(user)})
             return True
@@ -64,6 +83,13 @@ class BMController:
             return False
 
     def _delete_cheq_acc(self, userid):
+        """
+        Deletes a specified chequing account for a customer.
+
+        :param userid: the id for the chequing account
+        :return: True if the user id exists - the chequing account will be deleted
+        False if the user id does not exist - prints a message indicating incorrect id
+        """
         if userid == 'b':
             self._navigate_mainmenu(1)
         if Account.delete_account(userid, 'chequing_account'):
@@ -76,6 +102,13 @@ class BMController:
             return False
 
     def _delete_sav_acc(self, userid):
+        """
+        Deletes a specified savings account for a customer.
+
+        :param userid: the savings account id
+        :return: True, if the id matches an existing account and will delete from the model
+        False, if id does not match and will print error message
+        """
         if userid == 'b':
             self._navigate_mainmenu(1)
         if Account.delete_account(userid, 'saving_account'):
@@ -88,6 +121,14 @@ class BMController:
             return False
 
     def _create_account(self, new_account):
+        """
+        To create new accounts for a customer, check if the customer already has the selected account type.
+        If customer does not already have the selected account type, will create new account with initialized balance
+
+        :param new_account: the user id of the customer
+        :return: True if user id exists, will create a new chequing/saving account
+        False if user id does not exists, will print error message
+        """
         if new_account == 'b':
             self._navigate_mainmenu(1)
         if User.check_valid_user(new_account['account_holder']):
@@ -109,6 +150,12 @@ class BMController:
             return False
 
     def _get_account_info(self, user_id, action=''):
+        """
+        GET COOL SHIT
+        :param user_id:
+        :param action:
+        :return:
+        """
         if User.check_valid_user(user_id):
             accounts_info = dict(Account.get_account_info_for_user(user_id))
             transaction_logs = ''
