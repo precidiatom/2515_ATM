@@ -47,6 +47,8 @@ class User:
         if User.check_valid_user(userid) and str(User.get_persist_user_obj(userid)['pin']) == str(pin):
             if user_type == 'teller':
                 return User.teller_access(userid)
+            else:
+                return True
         else:
             return False
 

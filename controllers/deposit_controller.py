@@ -1,18 +1,25 @@
-from controllers.child_controller import ChildController
 from views.deposit_view import ViewDeposit
-from views.deposit_entry_frame import ViewDepositInput
+from views.deposit_view import ViewDeposit
 
 
-class DepositController(ChildController):
+class DepositController():
+    def __init__(self, frame_controller, user_id):
+        self.user = User.get_persist_user_obj(user_id)
+        self.frame_controller = frame_controller
+        self.interface = ViewDeposit(frame_controller.master)
 
-    def __init__(self, parent_controller):
-        super().__init__(parent_controller)
+        self.interface.main_menu_btn.config()
+        self.interface.main_menu_btn.config(
+            command=lambda: self.frame_controller.change_controller('main_menu', self.frame_controller.user_id))
+        self.interface.chequing_but.config(command=self._click_chequing)
+        self.interface.savings_but.config(command=self._click_saving)
+
 
     def set_deposit_window(self):
-        super().set_current_window(
-            ViewDeposit(self.parent_controller.atm_window.mid_frame))
+        self.view = ViewDeposit(self.frame_controller.atm_window.mid_frame)
 
     def _click_chequing(self):
         print('meow')
-        # super().set_current_window(
-        #     ViewDepositInput(self.parent_controller.atm_window.mid_frame))
+
+    def _click_saving(self):
+        print('woof')
