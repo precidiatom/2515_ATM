@@ -155,7 +155,6 @@ class BMController:
 
     def _get_account_info(self, user_id, action=''):
         """
-        GET COOL SHIT
         :param user_id:
         :param action:
         :return:

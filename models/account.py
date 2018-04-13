@@ -59,11 +59,9 @@ class Account:
         }
 
     def deposit(self, amount):
-        if amount <= 0:
-            print("inappropriate data")
-        else:
-            self.balance += amount
-            self.transaction_log.add_transaction(DEPOSIT, amount)
+        self.balance += amount
+        TransactionLog.add_transaction(self, DEPOSIT, amount)
+        self.update_acc_data()
 
     def show_transaction_log(self):
         transaction_log = ['[Transacton log for ' + self.user['user_name'] + ' #' + str(self.account_number) + ']',

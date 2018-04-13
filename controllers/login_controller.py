@@ -1,13 +1,13 @@
 from models.user import User
 from views.login_view import LoginWindow
 
-
 class LoginController:
     def __init__(self, frame_controller):
         self.frame_controller = frame_controller
+        self.view = None
         self.interface = LoginWindow(self.frame_controller.master)
         self.interface.credentials_butt.config(command=self._check_credentials)
-        # self.interface.user_pin.bind("<Return>", self._check_credentials)
+        # self.interface.us_pin.bind("<KeyPress-Return>", self._check_credentials())
 
     def set_main_window(self):
         self.interface.set_main_frame()
@@ -19,10 +19,6 @@ class LoginController:
         if User.login(user_id, pin):
             self.frame_controller.user_id = user_id
             self.frame_controller.change_controller('main_menu', user_id)
-            # self.interface.remove_main_frame()
-            # self.interface = MainController(self.master, user_id, self)
-            # self.interface.set_main_window()
-
         else:
             self.interface.fail_login()
 

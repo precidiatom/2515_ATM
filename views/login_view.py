@@ -4,7 +4,6 @@ from tkinter import messagebox
 COMICFONT = "Comic Sans MS", 14
 COMICSMALLER = "Comic Sans MS", 8
 
-
 class LoginWindow():
     def __init__(self, root):
         self.root = root
