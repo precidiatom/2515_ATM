@@ -40,6 +40,11 @@ class Account:
 
             self.user.update_user_data()
 
+    def update_acc_data(self):
+        self.user.accounts[self.account_type]['balance'] = self.balance
+        self.user.accounts[self.account_type]['transaction_log'] = self.transaction_log
+        self.user.update_user_data()
+
     def delete_account(self):
         del self.user.accounts[self.account_type]
         self.user.update_user_data()
@@ -68,11 +73,9 @@ class Account:
         return transaction_log
 
     def withdraw(self, amount):
-        if amount <= 0:
-            print("inappropriate data")
-        else:
-            self.balance -= amount
-            self.transaction_log.add_transaction(WITHDRAW, -1 * amount)
+        self.balance -= amount
+        TransactionLog.add_transaction(self, WITHDRAW, -1 * amount)
+        self.update_acc_data()
 
     def change_name(self, new_name):
         self.user = new_name

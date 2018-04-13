@@ -6,4 +6,4 @@ class Transaction:
         self.transaction_date = transaction_date
 
     def get_transaction_str(self):
-        return '{:30}{:20} @ {}'.format(self.transaction_type, self.transaction_amount, self.transaction_date)
+        return '{:30}{:20} @ {}\n'.format(self.transaction_type, self.transaction_amount, self.transaction_date)

@@ -26,7 +26,6 @@ class User:
             self.pin = self.user_obj['pin']
             self.user_type = self.user_obj['user_type']
             self.accounts = self.user_obj['accounts']
-            # self.accounts = literal_eval(self.user_obj['accounts'])
 
     def update_user_data(self):
         self.user_obj['user_id'] = self.user_id
