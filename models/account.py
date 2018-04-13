@@ -64,8 +64,9 @@ class Account:
             self.balance += amount
             self.transaction_log.add_transaction(DEPOSIT, amount)
 
-    def get_balance(self):
-        return self.balance
+    @staticmethod
+    def get_balance(userid, acc):
+        return User.get_persist_user_obj(userid)[acc]['balance']
 
     def show_transaction_log(self):
         transaction_log = ['[Transacton log for ' + self.user['user_name'] + ' #' + str(self.account_number) + ']',
@@ -80,15 +81,6 @@ class Account:
         else:
             self.balance -= amount
             self.transaction_log.add_transaction(WITHDRAW, -1 * amount)
-
-    # def charge_fee(self, fee_type, fee_amount):
-    #     self.balance -= self.fee
-    #     self.transaction_log.add_transaction(fee_type, -1 * fee_amount)
-    #
-    # def pay_interest(self):
-    #     interest_fee = abs(self.balance) * self.interest
-    #     self.balance += interest_fee
-    #     self.transaction_log.add_transaction(PAY_INTEREST, interest_fee)
 
     def change_name(self, new_name):
         self.user = new_name
