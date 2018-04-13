@@ -64,7 +64,7 @@ class BMController:
         :param new_user: User class which requires: user's name, pin, and user-type
         :return: user id and creates a folder for the user in the model
         """
-        new_user = User(new_user['user_name'], new_user['pin'], 'customer')
+        new_user = User(user_name=new_user['user_name'], pin=new_user['pin'], user_type='customer')
         self.session.output(new_user.get_user_info(), '\n[ New user created ]')
 
     def _delete_user(self, user):
@@ -92,7 +92,9 @@ class BMController:
         """
         if userid == 'b':
             self._navigate_mainmenu(1)
-        if Account.delete_account(userid, 'chequing_account'):
+
+        account = Account(userid=userid, account_type='chequing_account')
+        if account.delete_account():
             self.session.output(
                 {'deleted': 'Chequing account deleted for user {}'.format(userid)})
             return True
@@ -111,7 +113,8 @@ class BMController:
         """
         if userid == 'b':
             self._navigate_mainmenu(1)
-        if Account.delete_account(userid, 'saving_account'):
+        account = Account(userid=userid, account_type='saving_account')
+        if account.delete_account():
             self.session.output(
                 {'deleted': 'Saving account deleted for user {}'.format(userid)})
             return True
@@ -131,15 +134,16 @@ class BMController:
         """
         if new_account == 'b':
             self._navigate_mainmenu(1)
-        if User.check_valid_user(new_account['account_holder']):
-            if new_account['account_type'] in Account.get_account_info_for_user(new_account['account_holder']).keys():
+        if User.check_existing_user(new_account['account_holder']):
+            user = User(new_account['account_holder'])
+            if new_account['account_type'] in user.accounts.keys():
                 self.session.output({
                     'error':
                         'user already has an account of this type. select another one '
                         'or press \'b\' to return to main menu.\n'}, '[ INVALID ACCOUNT TYPE ERROR ]')
                 return False
             else:
-                new_account_created = Account(new_account['account_holder'], new_account['account_type'],
+                new_account_created = Account(userid=user.user_id, account_type=new_account['account_type'],
                                               balance=new_account['initial_balance'])
                 self.session.output(new_account_created.get_info(),
                                     '\n[ New account created for user {} ]'.format(new_account['account_holder']))
@@ -156,8 +160,9 @@ class BMController:
         :param action:
         :return:
         """
-        if User.check_valid_user(user_id):
-            accounts_info = dict(Account.get_account_info_for_user(user_id))
+        if User.check_existing_user(user_id):
+            user = User(user_id)
+            accounts_info = dict(user.accounts)
             transaction_logs = ''
             for v in accounts_info.values():
                 if action == '5':
@@ -170,11 +175,12 @@ class BMController:
             return False
 
     def _get_user_info(self, userid):
-        if User.check_valid_user(userid):
+        if User.check_existing_user(userid):
+            user = User(userid)
             self.session.output({
-                'user_id': User.get_persist_user_obj(userid)['user_id'],
-                'user_name': User.get_persist_user_obj(userid)['user_name'],
-                'user_type': User.get_persist_user_obj(userid)['user_type']
+                'user_id': userid,
+                'user_name': user.user_name,
+                'user_type': user.user_type
             })
             return True
         else:

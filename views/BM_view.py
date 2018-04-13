@@ -14,7 +14,7 @@ class CommandInterface:
         self.delete_cheq_acc_for = None
         self.delete_sav_acc_for = None
 
-        self.actions_list = [str(i) for i in range(1, 8)]
+        self.actions_list = [str(i) for i in range(1, 9)]
 
     def main_menu(self, failed=False):
 
