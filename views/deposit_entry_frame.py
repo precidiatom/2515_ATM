@@ -18,7 +18,7 @@ class ViewDepositInput():
         self.display_balance = tk.Label(self.overall_frame, text="Your current balance is: ", font=COMICSMALL)
         self.display_balance.grid(row=1, column=0)
         self.current_balance = tk.Label(self.overall_frame, font=COMICSMALL)
-        # self.current_balance.grid(row=1, column=1)
+        self.current_balance.grid(row=1, column=1)
 
         self.deposit_label = tk.Label(self.overall_frame, text="Amount to Deposit:", font=COMICSMALL)
         self.deposit_label.grid(row=2, column=1)

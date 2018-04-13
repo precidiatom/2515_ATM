@@ -61,7 +61,6 @@ class CommandInterface:
         print('------------------------')
         print('1 - Chequing Account')
         print('2 - Saving Account')
-        print('3 - Term Saving Account')
         account_type = input()
 
         self.new_acc['account_type'] = self._resolve_account_type(account_type)
