@@ -1,4 +1,5 @@
 from models.user import User
+from views.withdraw_options_frame import ViewWithdrawOptions
 from views.withdraw_view import ViewWithdraw
 
 
@@ -14,10 +15,22 @@ class WithdrawController():
         self.interface.savings_but.config(command=self._click_saving)
 
     def _click_chequing(self):
-        print('wow')
-
+        self.interface = ViewWithdrawOptions()
+        self.interface.welcome_account.config(text="Chequing")
+        self.interface.minus_20.config()
+        self.interface.minus_40.config()
+        self.interface.minus_60.config()
+        self.interface.minus_80.config()
+        self.interface.minus_100.config()
+        self.interface.mainmenu.config(command=lambda: self.interface.window.destroy())
     def _click_saving(self):
-        print('bow')
-
+        self.interface = ViewWithdrawOptions()
+        self.interface.welcome_account.config(text="Savings")
+        self.interface.minus_20.config()
+        self.interface.minus_40.config()
+        self.interface.minus_60.config()
+        self.interface.minus_80.config()
+        self.interface.minus_100.config()
+        self.interface.mainmenu.config(command=lambda: self.interface.window.destroy())
     def set_withdraw_window(self):
         self.view = ViewWithdraw(self.frame_controller)

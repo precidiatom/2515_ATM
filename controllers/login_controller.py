@@ -7,6 +7,7 @@ class LoginController:
         self.frame_controller = frame_controller
         self.interface = LoginWindow(self.frame_controller.master)
         self.interface.credentials_butt.config(command=self._check_credentials)
+        # self.interface.user_pin.bind("<Return>", self._check_credentials)
 
     def set_main_window(self):
         self.interface.set_main_frame()
