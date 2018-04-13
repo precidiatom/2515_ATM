@@ -22,8 +22,6 @@ class FrameController():
     def change_controller(self, controller_name, user_id=None):
         self.current_controller.interface.overall_frame.destroy()
         del self.current_controller
-        # if controller_name == 'log_in':
-        # self.current_controller = LoginController(self)
         if controller_name == 'main_menu':
             self.current_controller = MainController(self, self.user_id)
         elif controller_name == 'view_balance':

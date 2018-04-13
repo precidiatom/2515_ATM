@@ -17,15 +17,13 @@ class LoginWindow():
         self.mid_frame = tk.Frame(self.overall_frame, bg="lightgrey")
         self.bot_frame = tk.Frame(self.overall_frame)
 
-        self.overall_frame.pack()
+        self.overall_frame.grid(row=0, column=0)
         self.top_frame.grid(row=0, padx=100, pady=25)
         self.mid_frame.grid(row=1, padx=150, pady=50)
         self.bot_frame.grid(row=4, padx=150, pady=30)
 
         self.welcome = tk.Label(self.top_frame, text='Welcome to Meowmeow Bank', font=COMICFONT)
         self.welcome.grid(row=0, column=0)
-
-        self.mainframe = tk.Frame(self.mid_frame)
 
         self.user_id_label = tk.Label(self.mid_frame, text="User ID:", font=COMICFONT)
         self.user_id_label.grid(row=1, column=0, sticky="W")
@@ -46,7 +44,6 @@ class LoginWindow():
                                      command=lambda: root.destroy())
         self.exit_button.grid(row=8, column=5)
 
-        self.current_frame = self.mainframe
 
     def set_main_frame(self):
         self.mainframe.grid(row=1, padx=150, pady=55)

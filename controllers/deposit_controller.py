@@ -1,4 +1,5 @@
-from views.deposit_view import ViewDeposit
+from models.user import User
+from views.deposit_entry_frame import ViewDepositInput
 from views.deposit_view import ViewDeposit
 
 
@@ -14,12 +15,16 @@ class DepositController():
         self.interface.chequing_but.config(command=self._click_chequing)
         self.interface.savings_but.config(command=self._click_saving)
 
-
     def set_deposit_window(self):
         self.view = ViewDeposit(self.frame_controller.atm_window.mid_frame)
 
     def _click_chequing(self):
-        print('meow')
+        self.interface = ViewDepositInput()
+        self.interface.welcome_account.config(text="Chequing")
+        self.interface.mainmenu.config(command=lambda: self.interface.window.destroy())
+        deposit_amt = self.interface.deposit_amt.get()
 
     def _click_saving(self):
-        print('woof')
+        self.interface = ViewDepositInput()
+        self.interface.welcome_account.config(text="Savings")
+        self.interface.mainmenu.config(command=lambda: self.interface.window.destroy())
