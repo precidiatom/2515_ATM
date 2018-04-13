@@ -33,5 +33,4 @@ class DepositController():
         account = Account(self.user_id, account_type=account_type)
         deposit_amt = int(self.interface.deposit_amt.get())
         account.deposit(deposit_amt)
-        self.interface.current_balance.grid(row=1, column=1)
         self.interface.current_balance.config(text=account.balance)

@@ -165,7 +165,7 @@ class BMController:
             transaction_logs = ''
             for v in accounts_info.values():
                 if action == '5':
-                    transaction_logs = v['transaction_log']
+                    transaction_logs += v['transaction_log']
                 del v['transaction_log']
             self.session.output(accounts_info, transaction_logs)
             return True

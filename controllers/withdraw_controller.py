@@ -48,6 +48,7 @@ class WithdrawController():
     def _withdraw(self, account_type, amount):
         account = Account(self.user_id, account_type=account_type)
         account.withdraw(amount)
+        self.interface.current_balance.config(text=account.balance)
         print(account.balance, account.user.accounts[account_type]['balance'])
 
     def set_withdraw_window(self):
