@@ -1,4 +1,5 @@
 from models.account import Account
+from models.user import User
 from views.deposit_entry_frame import ViewDepositInput
 from views.deposit_view import ViewDeposit
 
@@ -6,14 +7,25 @@ from views.deposit_view import ViewDeposit
 class DepositController():
     def __init__(self, frame_controller, user_id):
         self.user_id = user_id
+        self.chq_account = None
+        self.sav_account = None
+
         self.frame_controller = frame_controller
         self.interface = ViewDeposit(frame_controller.master)
 
         self.interface.main_menu_btn.config()
         self.interface.main_menu_btn.config(
             command=lambda: self.frame_controller.change_controller('main_menu', self.frame_controller.user_id))
-        self.interface.chequing_but.config(command=self._click_chequing)
-        self.interface.savings_but.config(command=self._click_saving)
+
+        if 'chequing_account' in User(user_id).accounts.keys():
+            self.chq_account = Account(userid=user_id, account_type='chequing_account')
+            self.interface.show_chequing()
+            self.interface.chequing_but.config(command=self._click_chequing)
+
+        if 'saving_account' in User(user_id).accounts.keys():
+            self.sav_account = Account(userid=user_id, account_type='chequing_account')
+            self.interface.show_saving()
+            self.interface.savings_but.config(command=self._click_saving)
 
     def _click_chequing(self):
         self.interface = ViewDepositInput()
