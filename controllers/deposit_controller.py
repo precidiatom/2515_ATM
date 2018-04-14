@@ -48,13 +48,18 @@ class DepositController:
                                                 lambda ev, account=self.sav_account: self._deposit(ev, account))
 
     def _deposit(self, ev, account):
-        deposit_amt = float(self.deposit_interface.deposit_amt.get())
-        account.deposit(deposit_amt)
-        if self.chq_account:
-            messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-            self.deposit_interface.current_balance.config(text=account.balance)
-            self.interface.show_chq_balance(account.balance)
-        elif self.sav_account:
-            messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-            self.deposit_interface.current_balance.config(text=account.balance)
-            self.interface.show_sav_balance(account.balance)
+        try:
+            deposit_amt = float(self.deposit_interface.deposit_amt.get())
+            if deposit_amt <= 0:
+                raise ValueError
+            account.deposit(deposit_amt)
+            if self.chq_account:
+                messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
+                self.deposit_interface.current_balance.config(text=account.balance)
+                self.interface.show_chq_balance(account.balance)
+            elif self.sav_account:
+                messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
+                self.deposit_interface.current_balance.config(text=account.balance)
+                self.interface.show_sav_balance(account.balance)
+        except ValueError:
+            messagebox.showinfo("Invalid input", "Please enter only numbers greater than 0")

@@ -73,6 +73,8 @@ class WithdrawController:
                 if not account.withdraw(amount) and amount > 0:
                     self.interface.show_msg_box('Error', 'Insufficient funds!')
                 else:
+                    if amount <= 0:
+                        raise ValueError
                     self.interface.show_msg_box('Withdrawal', 'You withdrew $' + str(amount))
                     if self.chq_account:
                         self.withdraw_interface.display_balance.config(
