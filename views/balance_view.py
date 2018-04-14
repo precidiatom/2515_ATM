@@ -19,7 +19,7 @@ class ViewBalance():
 
         self.mid_frame = tk.Frame(self.overall_frame, bg="white")
         self.mid_frame.grid(row=1, column=0, padx=10, pady=10)
-        self.acc_balance = tk.Label(self.mid_frame, text="Account Balance: ", font=COMICSMALL)
+        self.acc_balance = tk.Label(self.mid_frame, text="Account Balance: $", font=COMICSMALL)
         self.acc_balance.grid(row=1, column=0, padx=100, pady=10)
 
         self.chq_acc_amt = tk.Label(self.mid_frame)
@@ -35,4 +35,4 @@ class ViewBalance():
         if account_type == 'chequing_account':
             self.chq_acc_amt.config(text='Chequing Account: $' + str(balance))
         elif account_type == 'saving_account':
-            self.sav_acc_amt.config(text='Saving Account: ' + str(balance))
+            self.sav_acc_amt.config(text='Saving Account: $' + str(balance))
