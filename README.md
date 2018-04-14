@@ -18,3 +18,14 @@ The interface includes:
 * **Precidia Tom**
 
 ## Installation
+* Run the atm.exe to start the customer banking GUI.
+* Run the bank_mgmt.exe to start the teller admin CLI.
+
+
+The atm.exe starts with an admin account, with account ID _a0101_ and PIN _1234_
+
+
+The bank_mgmt.exe starts with a default customer account, with account ID _b9090_ and PIN _1234_.
+
+
+Log in with the corresponding credentials to start exploring the CLI and the GUI. All persisted user data could be found in the **data** folder, with user ID's as the file names.
