@@ -16,14 +16,14 @@ class WithdrawController:
 
         if 'chequing_account' in User(user_id).accounts.keys():
             self.chq_account = Account(userid=user_id, account_type='chequing_account')
-            self.interface.show_current_balance('chequing account', self.chq_account.balance)
             self.interface.show_chequing()
+            self.interface.show_chq_balance(self.chq_account.balance)
             self.interface.chequing_but.config(command=self._click_chequing)
 
         if 'saving_account' in User(user_id).accounts.keys():
-            self.sav_account = Account(userid=user_id, account_type='chequing_account')
-            self.interface.show_current_balance('saving account', self.sav_account.balance)
+            self.sav_account = Account(userid=user_id, account_type='saving_account')
             self.interface.show_saving()
+            self.interface.show_sav_balance(self.sav_account.balance)
             self.interface.savings_but.config(command=self._click_saving)
 
     def _click_chequing(self):
@@ -64,13 +64,16 @@ class WithdrawController:
             command=lambda account=self.sav_account, amt=100: self._withdraw(account, amt))
         self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.window.destroy())
 
-        # self.withdraw_interface.minus_other.bind("<Button-1>", command=lambda account=self.sav_account, amt=self.withdraw_interface.get_other_amount(): self._withdraw(account, amt))
-
     def _withdraw(self, account, amount=0):
         if amount == 0 and len(self.withdraw_interface.get_other_amount()) > 0:
             amount = int(self.withdraw_interface.get_other_amount())
         if not account.withdraw(amount) and amount > 0:
             self.interface.show_insufficient_funds()
+        else:
+            if self.chq_account:
+                self.interface.show_chq_balance(self.chq_account.balance)
+            if self.sav_account:
+                self.interface.show_sav_balance(self.sav_account.balance)
 
     def set_withdraw_window(self):
         self.view = ViewWithdraw(self.frame_controller)

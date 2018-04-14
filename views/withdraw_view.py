@@ -14,7 +14,8 @@ class ViewWithdraw():
         self.welcome = tk.Label(self.overall_frame, text='Withdraw From Which Account?', font=COMICFONT)
         self.welcome.grid(row=0, column=0)
 
-        self.current_balance = tk.Label(self.overall_frame)
+        self.chq_balance = tk.Label(self.overall_frame)
+        self.sav_balance = tk.Label(self.overall_frame)
 
         self.chequing_but = tk.Button(self.overall_frame, text="Chequing", font=COMICSMALL)
         self.chequing_value = tk.Label(self.overall_frame)
@@ -30,12 +31,20 @@ class ViewWithdraw():
         self.chequing_value.grid(row=3, column=0)
 
     def show_saving(self):
-        self.savings_but.grid(row=4, column=0)
-        self.savings_value.grid(row=5, column=0)
+        self.savings_but.grid(row=5, column=0)
+        self.savings_value.grid(row=6, column=0)
 
-    def show_current_balance(self, account_type, balance):
-        self.current_balance.grid(row=1, column=0)
-        self.current_balance.config(text='{} balance: {}'.format(account_type, balance))
+    # def show_current_balance(self, account_type, balance):
+    #     self.current_balance.grid(row=1, column=0)
+    #     self.current_balance.config(text='{} balance: {}'.format(account_type, balance))
+
+    def show_sav_balance(self, balance):
+        self.sav_balance.grid(row=4, column=0)
+        self.sav_balance.config(text='saving balance: {}'.format(balance))
+
+    def show_chq_balance(self, balance):
+        self.chq_balance.grid(row=1, column=0)
+        self.chq_balance.config(text='chequing balance: {}'.format(balance))
 
     def show_insufficient_funds(self):
         messagebox.showerror("Error", "Insufficient funds!")
