@@ -11,9 +11,9 @@ class LoginWindow():
         self.root.title("Meow ATM")
         self.root.config()
 
-        self.overall_frame = tk.Frame(self.root, bg="cyan")
+        self.overall_frame = tk.Frame(self.root, bg="maroon")
         self.top_frame = tk.Frame(self.overall_frame)
-        self.mid_frame = tk.Frame(self.overall_frame, bg="lightgrey")
+        self.mid_frame = tk.Frame(self.overall_frame, bg="lightgrey", padx=10, pady=10)
         self.bot_frame = tk.Frame(self.overall_frame)
 
         self.overall_frame.grid(row=0, column=0)

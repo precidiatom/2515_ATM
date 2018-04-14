@@ -12,7 +12,7 @@ class MainWindow:
         self.root.title("Meow ATM")
         # self.root.config()
 
-        self.overall_frame = tk.Frame(self.root, bg="cyan")
+        self.overall_frame = tk.Frame(self.root, bg="maroon")
         self.top_frame = tk.Frame(self.overall_frame)
         self.mid_frame = tk.Frame(self.overall_frame, bg="yellow")
         self.right_frame = tk.Frame(self.overall_frame)
@@ -25,9 +25,9 @@ class MainWindow:
 
         # Header
         self.welcome = tk.Label(self.top_frame, text='Welcome to Meowmeow Bank, ', font=COMICFONT)
-        self.welcome_value = tk.Label(self.top_frame, text='<placeholderformeow>', font=COMICFONT)
-        self.welcome.grid(row=0, column=0)
-        self.welcome_value.grid(row=0, column=1)
+        self.welcome_value = tk.Label(self.top_frame, text='<meow>', font=COMICFONT)
+        self.welcome.grid(row=0, column=0, sticky="W")
+        self.welcome_value.grid(row=0, column=1, sticky="W")
 
         # Main screen frame
         self.balance_button = tk.Button(self.mid_frame, text='View my Balance', width=50)
@@ -36,16 +36,16 @@ class MainWindow:
 
         self.withdraw_button = tk.Button(self.mid_frame, text='Withdraw', width=50)
 
-        self.balance_button.grid(row=3, column=1, padx=25, pady=10)
-        self.deposit_button.grid(row=4, column=1, padx=25, pady=10)
-        self.withdraw_button.grid(row=5, column=1, padx=25, pady=10)
+        self.balance_button.grid(row=2, column=0, padx=25, pady=10, sticky="W")
+        self.deposit_button.grid(row=3, column=0, padx=25, pady=10, sticky="W")
+        self.withdraw_button.grid(row=4, column=0, padx=25, pady=10, sticky="W")
 
         self.logout_button = tk.Button(self.bot_frame, text="Log Out", width=15)
-        self.logout_button.grid(row=8, column=5)
+        self.logout_button.grid(row=6, column=1)
 
         self.exit_button = tk.Button(self.bot_frame, text='Exit', width=15,
                                      command=lambda: root.destroy())
-        self.exit_button.grid(row=8, column=0)
+        self.exit_button.grid(row=6, column=0)
 
         self.current_frame = self.mid_frame
 

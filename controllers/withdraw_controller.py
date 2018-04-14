@@ -27,7 +27,7 @@ class WithdrawController:
             self.interface.savings_but.config(command=self._click_saving)
 
     def _click_chequing(self):
-        self.withdraw_interface = ViewWithdrawOptions()
+        self.withdraw_interface = ViewWithdrawOptions(self.frame_controller.master)
         self.withdraw_interface.welcome_account.config(text="Chequing")
         self.withdraw_interface.minus_20.config(
             command=lambda account=self.chq_account, amt=20: self._withdraw(account, amt))
@@ -47,10 +47,10 @@ class WithdrawController:
         # self.other_value = int()
         # self.withdraw_interface.minus_other.config(
         #     command=lambda account=self.chq_account, amt=self.other_value: self._withdraw(account, amt))
-        self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.window.destroy())
+        self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.overall_frame.destroy())
 
     def _click_saving(self):
-        self.withdraw_interface = ViewWithdrawOptions()
+        self.withdraw_interface = ViewWithdrawOptions(self.frame_controller.master)
         self.withdraw_interface.welcome_account.config(text="Savings")
         self.withdraw_interface.minus_20.config(
             command=lambda account=self.sav_account, amt=20: self._withdraw(account, amt))
@@ -62,7 +62,7 @@ class WithdrawController:
             command=lambda account=self.sav_account, amt=80: self._withdraw(account, amt))
         self.withdraw_interface.minus_100.config(
             command=lambda account=self.sav_account, amt=100: self._withdraw(account, amt))
-        self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.window.destroy())
+        self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.overall_frame.destroy())
 
     def _withdraw(self, account, amount=0):
         if amount == 0 and len(self.withdraw_interface.get_other_amount()) > 0:
