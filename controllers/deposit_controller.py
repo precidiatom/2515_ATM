@@ -53,7 +53,9 @@ class DepositController:
         account.deposit(deposit_amt)
         if self.chq_account:
             messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-            self.interface.current_balance.config(text=self.chq_account.balance)
+            self.interface.current_balance.config(text=account.balance)
+            self.interface.show_chq_balance(account.balance)
         elif self.sav_account:
             messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-            self.interface.current_balance.config(text=self.sav_account.balance)
+            self.interface.current_balance.config(text=account.balance)
+            self.interface.show_sav_balance(account.balance)
