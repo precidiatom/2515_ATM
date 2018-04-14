@@ -4,9 +4,17 @@ from tkinter import messagebox
 COMICFONT = "Comic Sans MS", 14
 COMICSMALLER = "Comic Sans MS", 8
 
-
 class LoginWindow:
     def __init__(self, root):
+        """
+        The view for the login screen.
+
+        Arg:
+            root: the login controller
+
+        Author:
+            Precidia Tom
+        """
         self.root = root
 
         self.root.title("Meow ATM")
@@ -44,16 +52,11 @@ class LoginWindow:
                                      command=lambda: root.destroy())
         self.exit_button.grid(row=8, column=5)
 
-    def set_main_frame(self):
-        self.mainframe.grid(row=1, padx=150, pady=55)
-
     def fail_login(self):
+        """
+        Creates a error messagebox if an incorrect user_id/pin was inputted
+        """
         tk.messagebox.showerror("Incorrect account", "You have entered invalid user id or pin")
-
-    def remove_main_frame(self):
-        for widgets in self.root.winfo_children():
-            widgets.destroy()
-
 
 if __name__ == "__main__":
     root = tk.Tk()

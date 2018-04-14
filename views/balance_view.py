@@ -6,6 +6,16 @@ COMICSMALL = "Comic Sans MS", 10
 
 class ViewBalance:
     def __init__(self, master):
+        """
+        The frame to view the user's account balance(s).
+
+        Args:
+            master: the view balance controller
+
+        Authors:
+            Precidia Tom
+            Emilie Zhang
+        """
         self.master = master
 
         self.overall_frame = tk.Frame(self.master, bg="pink")
@@ -31,6 +41,13 @@ class ViewBalance:
         self.main_menu_btn.grid(row=8, column=0)
 
     def show_balance(self, balance, account_type):
+        """
+        To show balance amounts only if user has the types of accounts created.
+
+        Args:
+            balance: the funds in the user's account
+            account_type: specifies what the type of account
+        """
         if account_type == 'chequing_account':
             self.chq_acc_amt.config(text='Chequing Account: $' + str(balance))
         elif account_type == 'saving_account':

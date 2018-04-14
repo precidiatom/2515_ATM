@@ -3,9 +3,17 @@ import tkinter as tk
 COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
 
-
 class ViewDepositInput:
     def __init__(self, master):
+        """
+        The view for the deposit input amount.
+
+        Arg:
+            master: the Deposit controller
+
+        Author:
+            Precidia Tom
+        """
         self.overall_frame = master
         self.overall_frame = tk.Frame(self.overall_frame, bg="yellow")
         self.overall_frame.grid(row=0, column=0, padx=150, pady=75)
@@ -24,6 +32,7 @@ class ViewDepositInput:
         self.current_balance = tk.Label(self.mid_frame, font=COMICSMALL)
         self.current_balance.grid(row=2, column=1, padx=10, pady=25)
 
+        # Deposit input area
         self.deposit_label = tk.Label(self.mid_frame, text="Amount to Deposit:", font=COMICSMALL)
         self.deposit_label.grid(row=3, column=1)
         self.deposit_amt = tk.Entry(self.mid_frame, width=15)
@@ -36,9 +45,7 @@ class ViewDepositInput:
                                   font=COMICSMALL)
         self.mainmenu.grid(row=9, column=0, pady=10)
 
-
-
 if __name__ == "__main__":
     root = tk.Tk()
-    ViewDepositInput()
+    ViewDepositInput(root)
     tk.mainloop()

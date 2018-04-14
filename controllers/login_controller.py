@@ -11,9 +11,6 @@ class LoginController:
         self.interface.user_id.bind("<KeyPress-Return>", lambda ev: self._check_credentials())
         self.interface.user_pin.bind("<KeyPress-Return>", lambda ev: self._check_credentials())
 
-    def set_main_window(self):
-        self.interface.set_main_frame()
-
     def set_current_frame(self, frame):
         self.interface.current_frame = frame
 

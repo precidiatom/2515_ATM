@@ -3,9 +3,18 @@ import tkinter as tk
 COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
 
-
 class ViewWithdrawOptions:
     def __init__(self, master):
+        """
+        Displays the screen with all the withdraw options as well as customized amounts
+
+        Arg:
+            master: the Withdraw controller
+
+        Authors:
+            Precidia Tom
+            Emilie Zhang
+        """
         self.master = master
         self.overall_frame = tk.Frame(self.master, bg="palegreen")
         self.overall_frame.grid(row=0, column=0, padx=150, pady=85)
@@ -19,11 +28,11 @@ class ViewWithdrawOptions:
 
         self.mid_frame = tk.Frame(self.overall_frame, bg="white")
         self.mid_frame.grid(row=1, column=0, padx=85, pady=25)
+
         self.display_balance = tk.Label(self.mid_frame, text="Your current balance is: ", font=COMICSMALL)
-        self.mid_frame = tk.Frame(self.overall_frame)
-        self.mid_frame.grid(row=1, column=0, padx=10, pady=10)
         self.display_balance = tk.Label(self.mid_frame, font=COMICSMALL)
         self.display_balance.grid(row=1, column=0, padx=10, pady=25)
+
         self.current_balance = tk.Label(self.mid_frame, font=COMICSMALL)
         self.current_balance.grid(row=1, column=1, padx=10, pady=25)
 
@@ -52,6 +61,12 @@ class ViewWithdrawOptions:
         self.mainmenu.grid(row=10, column=0, pady=10)
 
     def get_other_amount(self):
+        """
+        Retrieves custom user input
+
+        Returns:
+            the manual user input in the Custom amount box
+        """
         return self.minus_other_input.get()
 
 
