@@ -121,17 +121,15 @@ class BMController:
             bool:   True if the user id exists - the chequing account will be deleted
                     False if the user id does not exist - prints a message indicating incorrect id
         """
-        if userid == 'b':
-            self._navigate_mainmenu(1)
-
         account = Account(userid=userid, account_type='chequing_account')
         if account.delete_account():
             self.session.output(
                 {'deleted': 'Chequing account deleted for user {}'.format(userid)})
             return True
         else:
-            self.session.output({'Error': 'Please re-enter user id or press \'b\' to return to main menu!\n'},
+            self.session.output({'Error': 'Returning to main menu!\n'},
                                 '[ Invalid user ID or selected account does not exist ]')
+            self._navigate_mainmenu(1)
             return False
 
     def _delete_sav_acc(self, userid):
@@ -169,15 +167,14 @@ class BMController:
              bool:  True if user id exists, will create a new chequing/saving account
                     False if user id does not exists, will print error message
         """
-        if new_account == 'b':
-            self._navigate_mainmenu(1)
         if User.check_existing_user(new_account['account_holder']):
             user = User(new_account['account_holder'])
             if new_account['account_type'] in user.accounts.keys():
                 self.session.output({
                     'error':
-                        'user already has an account of this type. select another one '
-                        'or press \'b\' to return to main menu.\n'}, '[ INVALID ACCOUNT TYPE ERROR ]')
+                        'user already has an account of this type. Returning to main menu.\n'},
+                    '[ INVALID ACCOUNT TYPE ERROR ]')
+                self._navigate_mainmenu(1)
                 return False
             else:
                 new_account_created = Account(userid=user.user_id, account_type=new_account['account_type'],
