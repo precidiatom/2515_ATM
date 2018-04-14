@@ -1,5 +1,3 @@
-from tkinter import *
-
 from controllers.deposit_controller import DepositController
 from controllers.login_controller import LoginController
 from controllers.main_controller import MainController
@@ -30,9 +28,3 @@ class FrameController:
             self.current_controller = DepositController(self, self.user_id)
         elif controller_name == 'view_withdraw':
             self.current_controller = WithdrawController(self, self.user_id)
-
-
-if __name__ == '__main__':
-    root = Tk()
-    new_frame_controller = FrameController(root)
-    mainloop()

@@ -234,7 +234,3 @@ class BMController:
         else:
             self.session.output({'invalid_user': 'please enter valid user ID!\n'}, '[ Fail to see user info ]')
             return False
-
-
-if __name__ == '__main__':
-    controller = BMController()
