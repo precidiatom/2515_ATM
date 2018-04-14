@@ -71,7 +71,7 @@ class Account:
         return transaction_log
 
     def withdraw(self, amount):
-        if self.balance < amount:
+        if self.balance < int(amount):
             return False
         else:
             self.balance -= amount

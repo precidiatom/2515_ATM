@@ -37,15 +37,17 @@ class ViewWithdrawOptions():
         self.minus_100 = tk.Button(self.overall_frame, text="$100", font=COMICSMALL)
         self.minus_100.grid(row=3, column=2)
 
-        self.minus_other_label = tk.Label(self.overall_frame, text="Other amount: ", font=COMICSMALL)
+        self.minus_other = tk.Button(self.overall_frame, text="Other amount: ", font=COMICSMALL)
         self.minus_other_input = tk.Entry(self.overall_frame, width=8)
-        self.minus_other_label.grid(row=4, column=1)
+        self.minus_other.grid(row=4, column=1)
         self.minus_other_input.grid(row=4, column=2)
-        self.minus_other_but = tk.Button(self.overall_frame, text="Wi")
 
-        self.mainmenu = tk.Button(self.overall_frame, text="Cancel Transaction. \n Return to Main Menu",
+        self.mainmenu = tk.Button(self.overall_frame, text="Return to Menu",
                                   font=COMICSMALL)
         self.mainmenu.grid(row=10, column=0)
+
+    def get_other_amount(self):
+        return self.minus_other_input.get()
 
 if __name__ == "__main__":
     root = tk.Tk()

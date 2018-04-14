@@ -14,7 +14,6 @@ class WithdrawController:
         self.interface.main_menu_btn.config(
             command=lambda: self.frame_controller.change_controller('main_menu', self.frame_controller.user_id))
 
-
         if 'chequing_account' in User(user_id).accounts.keys():
             self.chq_account = Account(userid=user_id, account_type='chequing_account')
             self.interface.show_current_balance('chequing account', self.chq_account.balance)
@@ -40,6 +39,14 @@ class WithdrawController:
             command=lambda account=self.chq_account, amt=80: self._withdraw(account, amt))
         self.withdraw_interface.minus_100.config(
             command=lambda account=self.chq_account, amt=100: self._withdraw(account, amt))
+
+        self.withdraw_interface.minus_other.bind("<Button-1>", lambda ev, account=self.chq_account,
+                                                                      amt=self.withdraw_interface.get_other_amount(): self._withdraw(
+            account=self.chq_account))
+
+        # self.other_value = int()
+        # self.withdraw_interface.minus_other.config(
+        #     command=lambda account=self.chq_account, amt=self.other_value: self._withdraw(account, amt))
         self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.window.destroy())
 
     def _click_saving(self):
@@ -57,8 +64,12 @@ class WithdrawController:
             command=lambda account=self.sav_account, amt=100: self._withdraw(account, amt))
         self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.window.destroy())
 
-    def _withdraw(self, account, amount):
-        if not account.withdraw(amount):
+        # self.withdraw_interface.minus_other.bind("<Button-1>", command=lambda account=self.sav_account, amt=self.withdraw_interface.get_other_amount(): self._withdraw(account, amt))
+
+    def _withdraw(self, account, amount=0):
+        if amount == 0 and len(self.withdraw_interface.get_other_amount()) > 0:
+            amount = int(self.withdraw_interface.get_other_amount())
+        if not account.withdraw(amount) and amount > 0:
             self.interface.show_insufficient_funds()
 
     def set_withdraw_window(self):
