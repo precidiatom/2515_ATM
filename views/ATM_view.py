@@ -57,6 +57,9 @@ class MainWindow:
 
         self.current_frame = self.mid_frame
 
+    def set_main_frame(self):
+        self.mid_frame.grid(row=1, padx=150, pady=55)
+
 if __name__ == "__main__":
     root = tk.Tk()
     MainWindow(root)

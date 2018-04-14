@@ -1,15 +1,30 @@
+"""
+    Authors: Emilie Zhang & Precidia Tom
+"""
 from models.user import User
 from views.login_view import LoginWindow
 
-
 class LoginController:
     def __init__(self, frame_controller):
+        """
+        The first controller of the program, controls the Login View.
+
+        Arg:
+            frame_controller: the master controller
+
+        Attributes:
+            interface: the instance of the View created
+        """
         self.frame_controller = frame_controller
-        self.view = None
         self.interface = LoginWindow(self.frame_controller.master)
+
+        # Configuring buttons on the LoginView
         self.interface.credentials_butt.config(command=self._check_credentials)
         self.interface.user_id.bind("<KeyPress-Return>", lambda ev: self._check_credentials())
         self.interface.user_pin.bind("<KeyPress-Return>", lambda ev: self._check_credentials())
+
+    def set_main_window(self):
+        self.interface.set_main_frame()
 
     def set_current_frame(self, frame):
         self.interface.current_frame = frame

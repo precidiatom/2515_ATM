@@ -52,6 +52,9 @@ class LoginWindow:
                                      command=lambda: root.destroy())
         self.exit_button.grid(row=8, column=5)
 
+    def set_main_frame(self):
+        self.mainframe.grid(row=1, padx=150, pady=55)
+
     def fail_login(self):
         """
         Creates a error messagebox if an incorrect user_id/pin was inputted

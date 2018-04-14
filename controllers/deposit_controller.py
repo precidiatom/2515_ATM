@@ -1,3 +1,6 @@
+"""
+    Authors: Emilie Zhang & Precidia Tom
+"""
 from tkinter import messagebox
 
 from models.account import Account
@@ -9,12 +12,12 @@ from views.deposit_view import ViewDeposit
 class DepositController:
     def __init__(self, frame_controller, user_id):
         """
-            The deposit controller that controls the event listeners and widgets of the
-            deposit view.
+        The deposit controller that controls the event listeners and widgets of the
+        deposit view.
 
-            Args:
-                frame_controller: the controller that controls the current frame
-                user_id: the user id that is logged in to this sessions
+        Args:
+            frame_controller: the controller that controls the current frame
+            user_id: the user id that is logged in to this sessions
         """
 
         self.user_id = user_id
@@ -28,6 +31,7 @@ class DepositController:
         self.interface.main_menu_btn.config(
             command=lambda: self.frame_controller.change_controller('main_menu', self.frame_controller.user_id))
 
+        # Checks if user has chequing/saving account - only existing account info is displayed
         if 'chequing_account' in User(user_id).accounts.keys():
             self.chq_account = Account(userid=user_id, account_type='chequing_account')
             self.interface.show_chequing()

@@ -1,9 +1,21 @@
+"""
+    Authors: Emilie Zhang & Precidia Tom
+"""
 from models.user import User
 from views.ATM_view import MainWindow
 
-
 class MainController:
     def __init__(self, frame_controller, user_id):
+        """
+        The controller for the Main Menu frame.
+
+        Arg:
+            frame_controller: the master controller
+            user_id: the user id that is logged in to this sessions
+
+        Attributes:
+            interface: the instance of the View created
+        """
         self.frame_controller = frame_controller
         self.master = frame_controller.master
         self.user = User(user_id)

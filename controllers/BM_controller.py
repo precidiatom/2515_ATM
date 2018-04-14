@@ -15,10 +15,6 @@ class BMController:
 
         Attributes:
             self.session creates the CLI view instance
-
-        Author:
-            Emilie Zhang
-
         """
         self.session = CommandInterface()
         while not self._login():
@@ -32,7 +28,6 @@ class BMController:
 
         Args:
             action (int): the integer passed in represents the selected action of the CLI user
-
         """
         if action == '1':
             new_user = self.session.create_user_inputs()
