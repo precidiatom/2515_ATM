@@ -51,7 +51,7 @@ class ViewDeposit:
             balance: the chequing account balance
         """
         self.chq_balance.grid(row=1, column=0)
-        self.chq_balance.config(text='Chequing balance: {}'.format(balance))
+        self.chq_balance.config(text='Chequing balance: ${}'.format(balance))
 
     def show_saving(self):
         """
@@ -68,4 +68,4 @@ class ViewDeposit:
             balance: the saving account balance
         """
         self.sav_balance.grid(row=4, column=0)
-        self.sav_balance.config(text='Saving balance: {}'.format(balance))
+        self.sav_balance.config(text='Saving balance: ${}'.format(balance))
