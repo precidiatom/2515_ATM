@@ -20,24 +20,26 @@ class DepositController():
         if 'chequing_account' in User(user_id).accounts.keys():
             self.chq_account = Account(userid=user_id, account_type='chequing_account')
             self.interface.show_chequing()
+            self.interface.show_chq_balance(self.chq_account.balance)
             self.interface.chequing_but.config(command=self._click_chequing)
 
         if 'saving_account' in User(user_id).accounts.keys():
-            self.sav_account = Account(userid=user_id, account_type='chequing_account')
+            self.sav_account = Account(userid=user_id, account_type='saving_account')
             self.interface.show_saving()
+            self.interface.show_sav_balance(self.sav_account.balance)
             self.interface.savings_but.config(command=self._click_saving)
 
     def _click_chequing(self):
-        self.interface = ViewDepositInput()
+        self.interface = ViewDepositInput(self.frame_controller.master)
         self.interface.welcome_account.config(text="Chequing")
-        self.interface.mainmenu.config(command=lambda: self.interface.window.destroy())
+        self.interface.mainmenu.config(command=lambda: self.interface.overall_frame.destroy())
         self.interface.deposit_but.bind("<Button-1>", lambda ev, account_type="chequing_account": self._deposit(ev,
                                                                                                                 "chequing_account"))
 
     def _click_saving(self):
-        self.interface = ViewDepositInput()
+        self.interface = ViewDepositInput(self.frame_controller.master)
         self.interface.welcome_account.config(text="Savings")
-        self.interface.mainmenu.config(command=lambda: self.interface.window.destroy())
+        self.interface.mainmenu.config(command=lambda: self.interface.overall_frame.destroy())
         self.interface.deposit_but.bind("<Button-1>", lambda ev, account_type="saving_account": self._deposit(ev,
                                                                                                               "saving_account"))
 
@@ -45,4 +47,7 @@ class DepositController():
         account = Account(self.user_id, account_type=account_type)
         deposit_amt = int(self.interface.deposit_amt.get())
         account.deposit(deposit_amt)
-        self.interface.current_balance.config(text=account.balance)
+        if self.chq_account:
+            self.interface.show_chq_balance(self.chq_account.balance)
+        if self.sav_account:
+            self.interface.show_sav_balance(self.sav_account.balance)
