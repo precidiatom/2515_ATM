@@ -68,7 +68,7 @@ class WithdrawController:
 
     def _withdraw(self, account, amount=0):
         if amount == 0 and len(self.withdraw_interface.get_other_amount()) > 0:
-            amount = int(self.withdraw_interface.get_other_amount())
+            amount = float(self.withdraw_interface.get_other_amount())
         if not account.withdraw(amount) and amount > 0:
             self.interface.show_msg_box('Error', 'Insufficient funds!')
         else:

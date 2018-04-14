@@ -8,7 +8,7 @@ class ViewDepositInput():
     def __init__(self, master):
         self.overall_frame = master
         self.overall_frame = tk.Frame(self.overall_frame, bg="yellow")
-        self.overall_frame.grid(row=0, column=0, padx=25, pady=75)
+        self.overall_frame.grid(row=0, column=0, padx=150, pady=75)
 
         self.top_frame = tk.Frame(self.overall_frame, bg="white")
         self.top_frame.grid(row=0, column=0, pady=15, padx=25)
@@ -18,11 +18,11 @@ class ViewDepositInput():
         self.welcome_account.grid(row=0,column=1)
 
         self.mid_frame = tk.Frame(self.overall_frame, bg="white")
-        self.mid_frame.grid(row=2, column=0, padx=80, pady=25)
+        self.mid_frame.grid(row=2, column=0, padx=75, pady=25)
         self.display_balance = tk.Label(self.mid_frame, text="Your current balance is: ", font=COMICSMALL)
-        self.display_balance.grid(row=2, column=0)
+        self.display_balance.grid(row=2, column=0, padx=10, pady=25)
         self.current_balance = tk.Label(self.mid_frame, font=COMICSMALL)
-        self.current_balance.grid(row=2, column=1)
+        self.current_balance.grid(row=2, column=1, padx=10, pady=25)
 
         self.deposit_label = tk.Label(self.mid_frame, text="Amount to Deposit:", font=COMICSMALL)
         self.deposit_label.grid(row=3, column=1)
@@ -34,7 +34,8 @@ class ViewDepositInput():
 
         self.mainmenu = tk.Button(self.overall_frame, text="Return to Main Menu",
                                   font=COMICSMALL)
-        self.mainmenu.grid(row=9, column=2, pady=10)
+        self.mainmenu.grid(row=9, column=0, pady=10)
+
 
 
 
