@@ -71,9 +71,13 @@ class Account:
         return transaction_log
 
     def withdraw(self, amount):
-        self.balance -= amount
-        TransactionLog.add_transaction(self, WITHDRAW, -1 * amount)
-        self.update_acc_data()
+        if self.balance < amount:
+            return False
+        else:
+            self.balance -= amount
+            TransactionLog.add_transaction(self, WITHDRAW, -1 * amount)
+            self.update_acc_data()
+            return True
 
     def change_name(self, new_name):
         self.user = new_name

@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 
 COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
@@ -35,6 +36,9 @@ class ViewWithdraw():
     def show_current_balance(self, account_type, balance):
         self.current_balance.grid(row=1, column=0)
         self.current_balance.config(text='{} balance: {}'.format(account_type, balance))
+
+    def show_insufficient_funds(self):
+        messagebox.showerror("Error", "Insufficient funds!")
 
     def remove_main_frame(self):
         for widgets in self.root.winfo_children():
