@@ -7,6 +7,7 @@ class LoginController:
         self.view = None
         self.interface = LoginWindow(self.frame_controller.master)
         self.interface.credentials_butt.config(command=self._check_credentials)
+        self.interface.user_id.bind("<KeyPress-Return>", lambda ev: self._check_credentials())
         self.interface.user_pin.bind("<KeyPress-Return>", lambda ev: self._check_credentials())
 
     def set_main_window(self):
