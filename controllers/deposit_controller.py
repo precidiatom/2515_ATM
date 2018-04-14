@@ -37,8 +37,7 @@ class DepositController:
         self.deposit_interface.current_balance.config(text=self.chq_account.balance)
         self.deposit_interface.mainmenu.config(command=lambda: self.deposit_interface.overall_frame.destroy())
         self.deposit_interface.deposit_but.bind("<Button-1>",
-                                                lambda ev, account_type="chequing_account": self._deposit(ev,
-                                                                                                                "chequing_account"))
+                                                lambda ev, account=self.chq_account: self._deposit(ev, account))
 
     def _click_saving(self):
         self.deposit_interface = ViewDepositInput(self.frame_controller.master)
@@ -46,11 +45,9 @@ class DepositController:
         self.deposit_interface.current_balance.config(text=self.sav_account.balance)
         self.deposit_interface.mainmenu.config(command=lambda: self.deposit_interface.overall_frame.destroy())
         self.deposit_interface.deposit_but.bind("<Button-1>",
-                                                lambda ev, account_type="saving_account": self._deposit(ev,
-                                                                                                              "saving_account"))
+                                                lambda ev, account=self.sav_account: self._deposit(ev, account))
 
-    def _deposit(self, ev, account_type):
-        account = Account(self.user_id, account_type=account_type)
+    def _deposit(self, ev, account):
         deposit_amt = float(self.deposit_interface.deposit_amt.get())
         account.deposit(deposit_amt)
         if self.chq_account:
