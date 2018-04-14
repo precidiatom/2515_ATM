@@ -31,9 +31,10 @@ class CommandInterface:
         print('6 - Delete a user')
         print('7 - Delete a chequing account')
         print('8 - Delete a saving account')
+        print('q - QUIT')
 
         self.action = input()
-        return self.action if self.action in self.actions_list else self.main_menu(failed=True)
+        return self.action if self.action in self.actions_list or self.action == 'q' else self.main_menu(failed=True)
 
     def create_user_inputs(self):
         self.new_user['user_name'] = input('\nEnter the first and last name of the user: ')

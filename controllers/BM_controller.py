@@ -25,7 +25,6 @@ class BMController:
             view_user_info = self.session.view_user_info_inputs()
             while not self._get_user_info(view_user_info):
                 view_user_info = self.session.view_user_info_inputs()
-
         elif action == '4' or action == '5':
             view_acc_info = self.session.view_acc_info_for_user_input()
             while not self._get_account_info(view_acc_info, action):
@@ -43,6 +42,10 @@ class BMController:
             delete_sav_acc = self.session.delete_sav_acc_inputs()
             while not self._delete_sav_acc(delete_sav_acc):
                 delete_sav_acc = self.session.delete_sav_acc_inputs()
+        elif action == 'q':
+            exit()
+
+        self._navigate_mainmenu(self.session.main_menu())
 
     def _login(self):
         """
