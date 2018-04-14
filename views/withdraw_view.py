@@ -5,7 +5,7 @@ COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
 
 
-class ViewWithdraw():
+class ViewWithdraw:
     def __init__(self, master):
         self.master = master
         self.overall_frame = tk.Frame(self.master, bg="palegreen")
@@ -40,8 +40,8 @@ class ViewWithdraw():
         self.chq_balance.grid(row=1, column=0)
         self.chq_balance.config(text='Chequing balance: {}'.format(balance))
 
-    def show_insufficient_funds(self):
-        messagebox.showerror("Error", "Insufficient funds!")
+    def show_msg_box(self, title, msg):
+        messagebox.showerror(title, msg)
 
     def remove_main_frame(self):
         for widgets in self.root.winfo_children():

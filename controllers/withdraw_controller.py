@@ -29,6 +29,7 @@ class WithdrawController:
     def _click_chequing(self):
         self.withdraw_interface = ViewWithdrawOptions(self.frame_controller.master)
         self.withdraw_interface.welcome_account.config(text="Chequing")
+        self.withdraw_interface.display_balance.config(text="Current balance: " + str(self.chq_account.balance))
         self.withdraw_interface.minus_20.config(
             command=lambda account=self.chq_account, amt=20: self._withdraw(account, amt))
         self.withdraw_interface.minus_40.config(
@@ -40,18 +41,15 @@ class WithdrawController:
         self.withdraw_interface.minus_100.config(
             command=lambda account=self.chq_account, amt=100: self._withdraw(account, amt))
 
-        self.withdraw_interface.minus_other.bind("<Button-1>", lambda ev, account=self.chq_account,
-                                                                      amt=self.withdraw_interface.get_other_amount(): self._withdraw(
-            account=self.chq_account))
+        self.withdraw_interface.minus_other.bind(
+            "<Button-1>", lambda ev, account=self.chq_account: self._withdraw(account=account))
 
-        # self.other_value = int()
-        # self.withdraw_interface.minus_other.config(
-        #     command=lambda account=self.chq_account, amt=self.other_value: self._withdraw(account, amt))
         self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.overall_frame.destroy())
 
     def _click_saving(self):
         self.withdraw_interface = ViewWithdrawOptions(self.frame_controller.master)
         self.withdraw_interface.welcome_account.config(text="Savings")
+        self.withdraw_interface.display_balance.config(text="Current balance: " + str(self.sav_account.balance))
         self.withdraw_interface.minus_20.config(
             command=lambda account=self.sav_account, amt=20: self._withdraw(account, amt))
         self.withdraw_interface.minus_40.config(
@@ -62,17 +60,24 @@ class WithdrawController:
             command=lambda account=self.sav_account, amt=80: self._withdraw(account, amt))
         self.withdraw_interface.minus_100.config(
             command=lambda account=self.sav_account, amt=100: self._withdraw(account, amt))
+
+        self.withdraw_interface.minus_other.bind(
+            "<Button-1>", lambda ev, account=self.sav_account: self._withdraw(account=account))
+
         self.withdraw_interface.mainmenu.config(command=lambda: self.withdraw_interface.overall_frame.destroy())
 
     def _withdraw(self, account, amount=0):
         if amount == 0 and len(self.withdraw_interface.get_other_amount()) > 0:
             amount = int(self.withdraw_interface.get_other_amount())
         if not account.withdraw(amount) and amount > 0:
-            self.interface.show_insufficient_funds()
+            self.interface.show_msg_box('Error', 'Insufficient funds!')
         else:
+            self.interface.show_msg_box('Withdrawal', 'You withdrew ' + str(amount))
             if self.chq_account:
+                self.withdraw_interface.display_balance.config(text="Current balance: " + str(self.chq_account.balance))
                 self.interface.show_chq_balance(self.chq_account.balance)
             if self.sav_account:
+                self.withdraw_interface.display_balance.config(text="Current balance: " + str(self.sav_account.balance))
                 self.interface.show_sav_balance(self.sav_account.balance)
 
     def set_withdraw_window(self):
