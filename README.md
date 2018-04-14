@@ -10,7 +10,7 @@ and the persistance data created using shelve.
 The interface includes:
 * A GUI that simulates a bank machine, allowing a user to view their account info, withdraw and deposit
   from their accounts.
-* A Bank Management CLI that allows a teller to add and delete users and accounts0, 
+* A Bank Management CLI that allows a teller to add and delete users and accounts, 
   as well as run reports.
 * Transaction logging
 * Login and user authentication
