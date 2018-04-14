@@ -4,7 +4,7 @@ COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
 
 
-class ViewDepositInput():
+class ViewDepositInput:
     def __init__(self, master):
         self.overall_frame = master
         self.overall_frame = tk.Frame(self.overall_frame, bg="yellow")
@@ -15,7 +15,7 @@ class ViewDepositInput():
         self.welcome = tk.Label(self.top_frame, text='Depositing into', font=COMICFONT)
         self.welcome.grid(row=0, column=0)
         self.welcome_account = tk.Label(self.top_frame, font=COMICFONT)
-        self.welcome_account.grid(row=0,column=1)
+        self.welcome_account.grid(row=0, column=1)
 
         self.mid_frame = tk.Frame(self.overall_frame, bg="white")
         self.mid_frame.grid(row=2, column=0, padx=80, pady=25)
@@ -35,7 +35,6 @@ class ViewDepositInput():
         self.mainmenu = tk.Button(self.overall_frame, text="Return to Main Menu",
                                   font=COMICSMALL)
         self.mainmenu.grid(row=9, column=2, pady=10)
-
 
 
 if __name__ == "__main__":

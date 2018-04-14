@@ -4,7 +4,7 @@ COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
 
 
-class ViewWithdrawOptions():
+class ViewWithdrawOptions:
     def __init__(self, master):
         self.master = master
         self.overall_frame = tk.Frame(self.master, bg="palegreen")

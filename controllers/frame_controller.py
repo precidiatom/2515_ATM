@@ -7,7 +7,7 @@ from controllers.view_balance_controller import ViewBalanceController
 from controllers.withdraw_controller import WithdrawController
 
 
-class FrameController():
+class FrameController:
     def __init__(self, master):
         self.master = master
         self.current_controller = None

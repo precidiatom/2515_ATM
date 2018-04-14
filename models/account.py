@@ -18,7 +18,7 @@ class Account:
         # create a new account if it does not already exist
         else:
             self.balance = float(balance)
-            self.account_number = app_data['NEXT_ACC_NUM']
+            self.account_number = ''.join(choice('0123456789') for i in range(4))
             self.account_type = account_type.lower().replace(' ', '_')
             self.user.accounts[self.account_type] = {
                 'account_num': self.account_number,
@@ -35,8 +35,6 @@ class Account:
                 0].get_transaction_str()
             self.user.accounts[account_type][
                 'transaction_log'] += '\n-------------------------------------------------------------------------------\n'
-
-            app_data['NEXT_ACC_NUM'] = ''.join(choice('0123456789') for i in range(4))
 
             self.user.update_user_data()
 
@@ -59,7 +57,7 @@ class Account:
         }
 
     def deposit(self, amount):
-        self.balance += amount
+        self.balance += float(amount)
         TransactionLog.add_transaction(self, DEPOSIT, amount)
         self.update_acc_data()
 
@@ -71,7 +69,7 @@ class Account:
         return transaction_log
 
     def withdraw(self, amount):
-        if self.balance < int(amount):
+        if self.balance < float(amount):
             return False
         else:
             self.balance -= amount

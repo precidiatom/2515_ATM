@@ -2,7 +2,7 @@ from models.user import User
 from views.ATM_view import MainWindow
 
 
-class MainController():
+class MainController:
     def __init__(self, frame_controller, user_id):
         # super().__init__(parent_controller)
         self.frame_controller = frame_controller

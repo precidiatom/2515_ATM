@@ -1,6 +1,7 @@
 from models.user import User
 from views.login_view import LoginWindow
 
+
 class LoginController:
     def __init__(self, frame_controller):
         self.frame_controller = frame_controller

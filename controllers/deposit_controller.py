@@ -4,7 +4,7 @@ from views.deposit_entry_frame import ViewDepositInput
 from views.deposit_view import ViewDeposit
 
 
-class DepositController():
+class DepositController:
     def __init__(self, frame_controller, user_id):
         self.user_id = user_id
         self.chq_account = None

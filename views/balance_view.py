@@ -4,7 +4,7 @@ COMICFONT = "Comic Sans MS", 15
 COMICSMALL = "Comic Sans MS", 10
 
 
-class ViewBalance():
+class ViewBalance:
     def __init__(self, master):
         # super().__init__(master)
         self.master = master

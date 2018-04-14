@@ -10,8 +10,12 @@ class User:
     def __init__(self, userid='', user_name='', pin='', user_type=''):
 
         if not User.check_existing_user(userid):
-            self.user_id = '{}{}{}'.format(user_name[0], user_name[-1],
-                                           ''.join(choice('0123456789') for i in range(4)))
+            if len(userid) == 0:
+                self.user_id = '{}{}{}'.format(
+                    user_name[0].lower(), user_name[-1].lower(), ''.join(choice('0123456789') for i in range(4)))
+            else:
+                self.user_id = userid
+
             self.user_name = user_name
             self.pin = pin
             self.user_type = user_type

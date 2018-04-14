@@ -4,7 +4,8 @@ from tkinter import messagebox
 COMICFONT = "Comic Sans MS", 14
 COMICSMALLER = "Comic Sans MS", 8
 
-class LoginWindow():
+
+class LoginWindow:
     def __init__(self, root):
         self.root = root
 
@@ -42,7 +43,6 @@ class LoginWindow():
         self.exit_button = tk.Button(self.bot_frame, text='Exit', width=20, font=COMICSMALLER,
                                      command=lambda: root.destroy())
         self.exit_button.grid(row=8, column=5)
-
 
     def set_main_frame(self):
         self.mainframe.grid(row=1, padx=150, pady=55)

@@ -20,7 +20,6 @@ class ViewWithdraw:
         self.sav_balance = tk.Label(self.top_frame)
 
         self.chequing_but = tk.Button(self.overall_frame, text="Chequing", font=COMICSMALL)
-
         self.savings_but = tk.Button(self.overall_frame, text="Savings", font=COMICSMALL)
 
         self.main_menu_btn = tk.Button(self.overall_frame, text="Return to Main Menu", font=COMICSMALL)

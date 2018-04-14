@@ -2,7 +2,7 @@ from models.user import User
 from views.balance_view import ViewBalance
 
 
-class ViewBalanceController():
+class ViewBalanceController:
     def __init__(self, frame_controller, user_id):
         self.user = User(user_id)
         self.frame_controller = frame_controller

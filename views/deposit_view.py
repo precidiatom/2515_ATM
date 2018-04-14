@@ -3,7 +3,8 @@ import tkinter as tk
 COMICFONT = "Comic Sans MS", 16
 COMICSMALL = "Comic Sans MS", 10
 
-class ViewDeposit():
+
+class ViewDeposit:
     def __init__(self, master):
         self.master = master
 
