@@ -1,3 +1,5 @@
+from tkinter import messagebox
+
 from models.account import Account
 from models.user import User
 from views.deposit_entry_frame import ViewDepositInput
@@ -32,6 +34,7 @@ class DepositController:
     def _click_chequing(self):
         self.interface = ViewDepositInput(self.frame_controller.master)
         self.interface.welcome_account.config(text="Chequing")
+        self.interface.current_balance.config(text=self.chq_account.balance)
         self.interface.mainmenu.config(command=lambda: self.interface.overall_frame.destroy())
         self.interface.deposit_but.bind("<Button-1>", lambda ev, account_type="chequing_account": self._deposit(ev,
                                                                                                                 "chequing_account"))
@@ -39,15 +42,18 @@ class DepositController:
     def _click_saving(self):
         self.interface = ViewDepositInput(self.frame_controller.master)
         self.interface.welcome_account.config(text="Savings")
+        self.interface.current_balance.config(text=self.sav_account.balance)
         self.interface.mainmenu.config(command=lambda: self.interface.overall_frame.destroy())
         self.interface.deposit_but.bind("<Button-1>", lambda ev, account_type="saving_account": self._deposit(ev,
                                                                                                               "saving_account"))
 
     def _deposit(self, ev, account_type):
         account = Account(self.user_id, account_type=account_type)
-        deposit_amt = int(self.interface.deposit_amt.get())
+        deposit_amt = float(self.interface.deposit_amt.get())
         account.deposit(deposit_amt)
         if self.chq_account:
-            self.interface.show_chq_balance(self.chq_account.balance)
-        if self.sav_account:
-            self.interface.show_sav_balance(self.sav_account.balance)
+            messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
+            self.interface.current_balance.config(text=self.chq_account.balance)
+        elif self.sav_account:
+            messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
+            self.interface.current_balance.config(text=self.sav_account.balance)
