@@ -1,13 +1,14 @@
 from tkinter import *
 
-from controllers.login_controller import LoginController
+from controllers.frame_controller import FrameController
+from models.account import Account
 from models.user import User
 
 if __name__ == "__main__":
+    user = User(userid='b9090', user_name='Hello Kitty', pin=1234, user_type='customer')
+    account = Account(userid=user.user_id, balance=1000.00, account_type='saving_account')
+    account = Account(userid=user.user_id, balance=500.00, account_type='chequing_account')
+
     root = Tk()
-    account_db = user = User(user_name='Meow', pin=1234, user_type='teller')
-    # atm_controller = MainController(root, account_db)
-    # atm_controller.set_main_window()
-    login_controller = LoginController(root)
-    login_controller.set_main_window()
+    new_frame_controller = FrameController(root)
     mainloop()
