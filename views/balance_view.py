@@ -22,7 +22,7 @@ class ViewBalance():
         self.chq_acc_amt.grid(row=2, column=0)
 
         self.sav_acc_amt = tk.Label(self.overall_frame)
-        self.sav_acc_amt.grid(row=2, column=0)
+        self.sav_acc_amt.grid(row=3, column=0)
 
         self.main_menu_btn = tk.Button(self.overall_frame, text="Return to Main Menu", font=COMICSMALL)
         self.main_menu_btn.grid(row=8, column=0)
@@ -41,4 +41,4 @@ class ViewBalance():
             print('meow moew moew')
             self.chq_acc_amt.config(text='Chequing Account: $' + str(balance))
         elif account_type == 'saving_account':
-            self.sav_acc_amt.config(text='Saving Account: $' + str(balance))
+            self.sav_acc_amt.config(text='Saving Account: ' + str(balance))
