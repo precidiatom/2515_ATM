@@ -1,15 +1,29 @@
 class CommandInterface:
 
     def __init__(self):
+        """
+        The View for the CLI. Generally prints all of the menus and messages.
+
+        Args:
+            teller_id: to start a employee session, will need their id
+            teller_pin: to authenticate identity, will need their pin
+            new_acc: empty dict to store new account info
+            new_user: empty dict to store new user info
+            view_user_info_for: variable to store CLI user input for the queried user_id
+            view_acc_info_for: variable to store account holder user id
+            delete_user = stores the CLI user requested user to delete
+            delete_cheq_acc_for = stores the CLI user requested chequing account to delete
+            delete_sav_acc_for = stores the CLI user requested saving account to delete
+            actions_list: stores available list of actions CLI user can do
+
+        """
         self.teller_id = input('Teller ID: ')
         self.teller_pin = input('PIN: ')
         self.action = None
         self.new_acc = {}
         self.new_user = {}
-        self.view_logs_for = None
         self.view_user_info_for = None
         self.view_acc_info_for = None
-        self.view_acc_num = None
         self.delete_user = None
         self.delete_cheq_acc_for = None
         self.delete_sav_acc_for = None
@@ -75,23 +89,46 @@ class CommandInterface:
         return self.view_user_info_for
 
     def view_acc_info_for_user_input(self):
+        """
+        Callback to get user id to view their account information.
+        :return: CLI user's input as a string
+        """
         self.view_acc_info_for = input('Enter the user ID of the account holder: ')
         return self.view_acc_info_for
 
     def delete_cheq_acc_inputs(self):
+        """
+        Callback to get user id to delete their chequing account.
+        :return: CLI user's input as a string
+        """
         self.delete_cheq_acc_for = input('Enter the user ID of the account holder: ')
         return self.delete_cheq_acc_for
 
     def delete_sav_acc_inputs(self):
+        """
+        Callback to get user id to delete their savings account.
+        :return: CLI user's input as a string
+        """
         self.delete_sav_acc_for = input('Enter the user ID of the account holder: ')
         return self.delete_sav_acc_for
 
     def delete_user_inputs(self):
+        """
+        Callback to get user id that you want to delete.
+        :return: the CLI user's input as a string
+        """
         self.delete_user = input('Enter the ID for the user you want to delete: ')
         return self.delete_user
 
     @staticmethod
     def output(obj, msg=''):
+        """
+        Prints output; for error messages or items in a dictionary container
+
+        :param obj: The object that contains the information to print or simple print statement
+        :param msg: any additional print statements, is optional
+        :return: print statements
+        """
         print(msg)
         for k, v in obj.items():
             print('{}: {}'.format(k.replace('_', ' ').upper(), v))

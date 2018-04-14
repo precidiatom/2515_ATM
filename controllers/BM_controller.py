@@ -6,12 +6,23 @@ from views.BM_view import CommandInterface
 class BMController:
 
     def __init__(self):
+        """
+        BMController is the controller of the CLI.
+        Args:
+            self.session creates the CLI view
+        """
         self.session = CommandInterface()
         while not self._login():
             self.session = CommandInterface()
         self._navigate_mainmenu(self.session.main_menu())
 
     def _navigate_mainmenu(self, action):
+        """
+        This is the main decision tree for the CLI.
+        The corresponding actions and integers are found in the BM_View.
+        :param action: the integer passed in represents the selected action of the CLI user
+        :return: the appropriate views are displayed and methods are used depending on the action
+        """
         if action == '1':
             new_user = self.session.create_user_inputs()
             self._create_user(new_user)
@@ -155,9 +166,12 @@ class BMController:
 
     def _get_account_info(self, user_id, action=''):
         """
-        :param user_id:
-        :param action:
-        :return:
+        Displays user's account information.
+
+        :param user_id: The user id that the CLI user wants to check information about
+        :param action: is 5 if CLI user wants to see transaction logs
+        :return: If action == 4, prints a user's account information
+            If action == 5, prints the user's account's transaction logs
         """
         if User.check_existing_user(user_id):
             user = User(user_id)
@@ -174,6 +188,12 @@ class BMController:
             return False
 
     def _get_user_info(self, userid):
+        """
+        Displays the user's basic information
+        :param userid: the user's user id which is needed to authenticate user
+        :return: True - if user id exists in the model
+            False - if user does not exist, will keep asking until valid user id is inputted
+        """
         if User.check_existing_user(userid):
             user = User(userid)
             self.session.output({
