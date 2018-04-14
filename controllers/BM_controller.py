@@ -8,8 +8,13 @@ class BMController:
     def __init__(self):
         """
         BMController is the controller of the CLI.
-        Args:
-            self.session creates the CLI view
+
+        Attributes:
+            self.session creates the CLI view instance
+
+        Author:
+            Emilie Zhang
+
         """
         self.session = CommandInterface()
         while not self._login():
@@ -20,8 +25,10 @@ class BMController:
         """
         This is the main decision tree for the CLI.
         The corresponding actions and integers are found in the BM_View.
-        :param action: the integer passed in represents the selected action of the CLI user
-        :return: the appropriate views are displayed and methods are used depending on the action
+
+        Args:
+            action (int): the integer passed in represents the selected action of the CLI user
+
         """
         if action == '1':
             new_user = self.session.create_user_inputs()
@@ -62,8 +69,9 @@ class BMController:
         """
         Authenticates the user account by checking if the user id and pin match with the information stored.
 
-        :return: True if the input user id matches the database user id
-                False if do not match
+        Returns:
+             bool:  True if the input user id matches the database user id
+                    False if do not match
         """
         if User.login(self.session.teller_id, self.session.teller_pin, 'teller'):
             return True
@@ -75,8 +83,8 @@ class BMController:
         """
         Creates new customer using the User class as the parameter
 
-        :param new_user: User class which requires: user's name, pin, and user-type
-        :return: user id and creates a folder for the user in the model
+        Args:
+             new_user (obj): User class which requires: user's name, pin, and user-type
         """
         new_user = User(user_name=new_user['user_name'], pin=new_user['pin'], user_type='customer')
         self.session.output(new_user.get_user_info(), '\n[ New user created ]')
@@ -85,9 +93,11 @@ class BMController:
         """
         Deletes an existing user from the model.
 
-        :param user: the User object that will be deleted
-        :return: True if user exists in the model
-            False if the input user id does not exist in the model
+        Args:
+            user (obj): the User to be deleted
+        Returns:
+            bool:   True if user exists in the model
+                    False if the input user id does not exist in the model
         """
         if User.delete_user(user):
             self.session.output({'deleted': 'user {} and their related accounts'.format(user)})
@@ -100,9 +110,11 @@ class BMController:
         """
         Deletes a specified chequing account for a customer.
 
-        :param userid: the id for the chequing account
-        :return: True if the user id exists - the chequing account will be deleted
-        False if the user id does not exist - prints a message indicating incorrect id
+        Args:
+            userid (str): the id for the chequing account
+        Returns:
+            bool:   True if the user id exists - the chequing account will be deleted
+                    False if the user id does not exist - prints a message indicating incorrect id
         """
         if userid == 'b':
             self._navigate_mainmenu(1)
@@ -121,9 +133,12 @@ class BMController:
         """
         Deletes a specified savings account for a customer.
 
-        :param userid: the savings account id
-        :return: True, if the id matches an existing account and will delete from the model
-        False, if id does not match and will print error message
+        Args:
+            userid (str): the savings account id
+
+        Returns:
+             bool:  True if the id matches an existing account and will delete from the model
+                    False if id does not match and will print error message
         """
         if userid == 'b':
             self._navigate_mainmenu(1)
@@ -142,9 +157,12 @@ class BMController:
         To create new accounts for a customer, check if the customer already has the selected account type.
         If customer does not already have the selected account type, will create new account with initialized balance
 
-        :param new_account: the user id of the customer
-        :return: True if user id exists, will create a new chequing/saving account
-        False if user id does not exists, will print error message
+        Args:
+            new_account (str): the user id of the customer
+
+        Returns:
+             bool:  True if user id exists, will create a new chequing/saving account
+                    False if user id does not exists, will print error message
         """
         if new_account == 'b':
             self._navigate_mainmenu(1)
@@ -171,10 +189,9 @@ class BMController:
         """
         Displays user's account information.
 
-        :param user_id: The user id that the CLI user wants to check information about
-        :param action: is 5 if CLI user wants to see transaction logs
-        :return: If action == 4, prints a user's account information
-            If action == 5, prints the user's account's transaction logs
+        Args:
+            user_id (str): The user id that the CLI user wants to check information about
+            action (int): is 5 if CLI user wants to see transaction logs
         """
         if User.check_existing_user(user_id):
             user = User(user_id)
@@ -193,9 +210,13 @@ class BMController:
     def _get_user_info(self, userid):
         """
         Displays the user's basic information
-        :param userid: the user's user id which is needed to authenticate user
-        :return: True - if user id exists in the model
-            False - if user does not exist, will keep asking until valid user id is inputted
+
+        Args:
+            userid (str): the user's user id which is needed to authenticate user
+
+        Returns:
+            bool:   True if user id exists in the model
+                    False if user does not exist, will keep asking until valid user id is inputted
         """
         if User.check_existing_user(userid):
             user = User(userid)
