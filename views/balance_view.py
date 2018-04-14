@@ -3,7 +3,6 @@ import tkinter as tk
 COMICFONT = "Comic Sans MS", 15
 COMICSMALL = "Comic Sans MS", 10
 
-
 class ViewBalance:
     def __init__(self, master):
         """
@@ -19,17 +18,15 @@ class ViewBalance:
         self.master = master
 
         self.overall_frame = tk.Frame(self.master, bg="pink")
-        self.overall_frame.grid(row=0, column=0, padx=100, pady=125)
+        self.overall_frame.grid(row=0, column=0, padx=150, pady=100)
 
-        self.top_frame = tk.Frame(self.overall_frame)
-        self.top_frame.grid(row=0, column=0, padx=5, pady=5)
+        self.top_frame = tk.Frame(self.overall_frame, bg="white")
+        self.top_frame.grid(row=0, column=0, padx=10, pady=10)
         self.welcome = tk.Label(self.top_frame, text='Viewing your account balance', font=COMICFONT)
-        self.welcome.grid(row=0, column=0)
+        self.welcome.grid(row=0, column=0, padx=20, pady=20)
 
         self.mid_frame = tk.Frame(self.overall_frame, bg="white")
         self.mid_frame.grid(row=1, column=0, padx=10, pady=10)
-        # self.acc_balance = tk.Label(self.mid_frame, text="Account Balance: $", font=COMICSMALL)
-        # self.acc_balance.grid(row=1, column=0, padx=100, pady=10)
 
         self.chq_acc_amt = tk.Label(self.mid_frame)
 
