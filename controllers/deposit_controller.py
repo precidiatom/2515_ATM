@@ -32,30 +32,32 @@ class DepositController:
             self.interface.savings_but.config(command=self._click_saving)
 
     def _click_chequing(self):
-        self.interface = ViewDepositInput(self.frame_controller.master)
-        self.interface.welcome_account.config(text="Chequing")
-        self.interface.current_balance.config(text=self.chq_account.balance)
-        self.interface.mainmenu.config(command=lambda: self.interface.overall_frame.destroy())
-        self.interface.deposit_but.bind("<Button-1>", lambda ev, account_type="chequing_account": self._deposit(ev,
+        self.deposit_interface = ViewDepositInput(self.frame_controller.master)
+        self.deposit_interface.welcome_account.config(text="Chequing")
+        self.deposit_interface.current_balance.config(text=self.chq_account.balance)
+        self.deposit_interface.mainmenu.config(command=lambda: self.deposit_interface.overall_frame.destroy())
+        self.deposit_interface.deposit_but.bind("<Button-1>",
+                                                lambda ev, account_type="chequing_account": self._deposit(ev,
                                                                                                                 "chequing_account"))
 
     def _click_saving(self):
-        self.interface = ViewDepositInput(self.frame_controller.master)
-        self.interface.welcome_account.config(text="Savings")
-        self.interface.current_balance.config(text=self.sav_account.balance)
-        self.interface.mainmenu.config(command=lambda: self.interface.overall_frame.destroy())
-        self.interface.deposit_but.bind("<Button-1>", lambda ev, account_type="saving_account": self._deposit(ev,
+        self.deposit_interface = ViewDepositInput(self.frame_controller.master)
+        self.deposit_interface.welcome_account.config(text="Savings")
+        self.deposit_interface.current_balance.config(text=self.sav_account.balance)
+        self.deposit_interface.mainmenu.config(command=lambda: self.deposit_interface.overall_frame.destroy())
+        self.deposit_interface.deposit_but.bind("<Button-1>",
+                                                lambda ev, account_type="saving_account": self._deposit(ev,
                                                                                                               "saving_account"))
 
     def _deposit(self, ev, account_type):
         account = Account(self.user_id, account_type=account_type)
-        deposit_amt = float(self.interface.deposit_amt.get())
+        deposit_amt = float(self.deposit_interface.deposit_amt.get())
         account.deposit(deposit_amt)
         if self.chq_account:
             messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-            self.interface.current_balance.config(text=account.balance)
+            self.deposit_interface.current_balance.config(text=account.balance)
             self.interface.show_chq_balance(account.balance)
         elif self.sav_account:
             messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-            self.interface.current_balance.config(text=account.balance)
+            self.deposit_interface.current_balance.config(text=account.balance)
             self.interface.show_sav_balance(account.balance)
