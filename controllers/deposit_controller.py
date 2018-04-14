@@ -47,7 +47,7 @@ class DepositController:
     def _click_chequing(self):
         self.deposit_interface = ViewDepositInput(self.frame_controller.master)
         self.deposit_interface.welcome_account.config(text="Chequing")
-        self.deposit_interface.current_balance.config(text=self.chq_account.balance)
+        self.deposit_interface.current_balance.config(text='$' + str(self.chq_account.balance))
         self.deposit_interface.mainmenu.config(command=lambda: self.deposit_interface.overall_frame.destroy())
         self.deposit_interface.deposit_but.bind("<Button-1>",
                                                 lambda ev, account=self.chq_account: self._deposit(ev, account))
@@ -55,7 +55,7 @@ class DepositController:
     def _click_saving(self):
         self.deposit_interface = ViewDepositInput(self.frame_controller.master)
         self.deposit_interface.welcome_account.config(text="Savings")
-        self.deposit_interface.current_balance.config(text=self.sav_account.balance)
+        self.deposit_interface.current_balance.config(text='$' + str(self.sav_account.balance))
         self.deposit_interface.mainmenu.config(command=lambda: self.deposit_interface.overall_frame.destroy())
         self.deposit_interface.deposit_but.bind("<Button-1>",
                                                 lambda ev, account=self.sav_account: self._deposit(ev, account))
@@ -79,12 +79,12 @@ class DepositController:
                 raise ValueError
             account.deposit(deposit_amt)
             if self.chq_account:
-                messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-                self.deposit_interface.current_balance.config(text=account.balance)
+                messagebox.showinfo("Transaction", "You have deposited ${}".format(deposit_amt))
+                self.deposit_interface.current_balance.config(text='$' + str(account.balance))
                 self.interface.show_chq_balance(account.balance)
             elif self.sav_account:
-                messagebox.showinfo("Transaction", "You have deposited {}".format(deposit_amt))
-                self.deposit_interface.current_balance.config(text=account.balance)
+                messagebox.showinfo("Transaction", "You have deposited ${}".format(deposit_amt))
+                self.deposit_interface.current_balance.config(text='$' + str(account.balance))
                 self.interface.show_sav_balance(account.balance)
         except ValueError:
             messagebox.showinfo("Invalid input", "Please enter only numbers greater than 0")

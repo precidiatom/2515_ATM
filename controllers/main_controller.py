@@ -24,7 +24,7 @@ class MainController:
         self.set_main_window()
 
     def set_main_window(self):
-        self.interface.welcome_value.config(text=self.user['user_name'])
+        self.interface.welcome_value.config(text=self.user.user_name)
         self.interface.balance_button.config(command=self._view_balance)
         self.interface.withdraw_button.config(command=self._view_withdraw)
         self.interface.deposit_button.config(command=self._view_deposit)
