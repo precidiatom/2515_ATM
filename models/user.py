@@ -1,3 +1,7 @@
+"""
+    Author: Emile Zhang
+"""
+
 from os import path, makedirs
 from random import choice
 from shelve import open
@@ -8,6 +12,17 @@ from models.constants import data_abs_path
 
 class User:
     def __init__(self, userid='', user_name='', pin='', user_type=''):
+
+        """
+        The class that handles all the actions regarding a user. It creates a new object if the userid
+        does not exist, or fetches from persisted objects if it exists.
+
+        Args:
+            userid: userid of an user
+            user_name: name of the user
+            pin: pin of the user
+            user_type: type of the user
+        """
 
         if not User.check_existing_user(userid):
             if len(userid) == 0:
@@ -48,6 +63,17 @@ class User:
 
     @staticmethod
     def delete_user(userid):
+        """
+        Deletes user from the persisted data
+
+        Args:
+            userid:
+
+        Returns:
+            True: if delete successful
+            False: if delete failed
+
+        """
         if User.check_existing_user(userid):
             rmtree('{}\\{}\\'.format(data_abs_path, str(userid)))
             return True
@@ -56,6 +82,14 @@ class User:
 
     @staticmethod
     def get_persist_user_obj(userid):
+        """
+        Gets the persisted user object based on user id, or creates a new one if it is a new user
+        Args:
+            userid: the userid for the user being fetched
+
+        Returns:
+           The persisted user object
+        """
         if not path.exists('{}\\{}\\'.format(data_abs_path, str(userid))):
             makedirs('{}\\{}\\'.format(data_abs_path, str(userid)))
         return open('{}\\{}\\{}.db'.format(data_abs_path, str(userid), str(userid))

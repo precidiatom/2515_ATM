@@ -8,6 +8,15 @@ from views.deposit_view import ViewDeposit
 
 class DepositController:
     def __init__(self, frame_controller, user_id):
+        """
+            The deposit controller that controls the event listeners and widgets of the
+            deposit view.
+
+            Args:
+                frame_controller: the controller that controls the current frame
+                user_id: the user id that is logged in to this sessions
+        """
+
         self.user_id = user_id
         self.chq_account = None
         self.sav_account = None
@@ -48,6 +57,18 @@ class DepositController:
                                                 lambda ev, account=self.sav_account: self._deposit(ev, account))
 
     def _deposit(self, ev, account):
+        """
+        The controller method that deposits the entered amount into an account
+
+        Args:
+            ev: the event handled
+            account: the account being deposited into
+
+        Raises:
+            ValueError: if the deposit_amt does not contain only integers
+
+        """
+
         try:
             deposit_amt = float(self.deposit_interface.deposit_amt.get())
             if deposit_amt <= 0:

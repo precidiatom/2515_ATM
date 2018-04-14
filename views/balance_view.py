@@ -6,7 +6,6 @@ COMICSMALL = "Comic Sans MS", 10
 
 class ViewBalance:
     def __init__(self, master):
-        # super().__init__(master)
         self.master = master
 
         self.overall_frame = tk.Frame(self.master, bg="pink")

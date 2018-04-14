@@ -1,3 +1,8 @@
+"""
+    Author: Emile Zhang
+"""
+
+
 class CommandInterface:
 
     def __init__(self):
@@ -30,7 +35,7 @@ class CommandInterface:
         print('5 - View transaction logs for a user\n')
         print('6 - Delete a user')
         print('7 - Delete a chequing account')
-        print('8 - Delete a saving account')
+        print('8 - Delete a saving account\n')
         print('q - QUIT')
 
         self.action = input()

@@ -1,3 +1,7 @@
+"""
+    Author: Emile Zhang
+"""
+
 from models.account import Account
 from models.user import User
 from views.BM_view import CommandInterface
@@ -25,6 +29,7 @@ class BMController:
             view_user_info = self.session.view_user_info_inputs()
             while not self._get_user_info(view_user_info):
                 view_user_info = self.session.view_user_info_inputs()
+
         elif action == '4' or action == '5':
             view_acc_info = self.session.view_acc_info_for_user_input()
             while not self._get_account_info(view_acc_info, action):

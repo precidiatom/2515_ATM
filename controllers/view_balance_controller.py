@@ -7,7 +7,6 @@ class ViewBalanceController:
         self.user = User(user_id)
         self.frame_controller = frame_controller
         self.interface = ViewBalance(self.frame_controller.master)
-        self.view = None
 
         for acc in self.user.accounts.keys():
             self.interface.show_balance(self.user.accounts[acc]['balance'], account_type=acc)

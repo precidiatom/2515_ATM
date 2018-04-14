@@ -1,3 +1,7 @@
+"""
+    Author: Emile Zhang
+"""
+
 from random import choice
 
 from models.constants import *
@@ -7,6 +11,15 @@ from models.user import User
 
 class Account:
     def __init__(self, userid, account_type, balance=0.0):
+        """
+        The class that handles all actions regarding an account. Init will create a new account if
+        it does not already exist for a user, or fetch the account from persisted objects.
+
+        Args:
+            userid: the id of the user that the account is for
+            account_type: the type of the account
+            balance: the initial balance of this account (only used for new accounts)
+        """
         self.user = User(userid)
 
         # If user already has this type of account, get it from persisted object
@@ -38,6 +51,7 @@ class Account:
 
             self.user.update_user_data()
 
+    # Updates the persisted object of the account
     def update_acc_data(self):
         self.user.accounts[self.account_type]['balance'] = self.balance
         self.user.accounts[self.account_type]['transaction_log'] = self.transaction_log
@@ -61,13 +75,6 @@ class Account:
         TransactionLog.add_transaction(self, DEPOSIT, amount)
         self.update_acc_data()
 
-    def show_transaction_log(self):
-        transaction_log = ['[Transacton log for ' + self.user['user_name'] + ' #' + str(self.account_number) + ']',
-                           '-------------------------------------------------------------------------------']
-        transaction_log.extend([transaction.get_transaction_str() for transaction in self.transaction_log.transactions])
-        transaction_log.append('\n')
-        return transaction_log
-
     def withdraw(self, amount):
         if self.balance < float(amount):
             return False
@@ -76,6 +83,3 @@ class Account:
             TransactionLog.add_transaction(self, WITHDRAW, -1 * amount)
             self.update_acc_data()
             return True
-
-    def change_name(self, new_name):
-        self.user = new_name

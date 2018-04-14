@@ -24,8 +24,6 @@ class LoginController:
         else:
             self.interface.fail_login()
 
-        print('yabai', User.login(user_id, pin))
-
     def _check_credentials(self):
         user_account = self.interface.user_id.get()
         pin_inp = self.interface.user_pin.get()

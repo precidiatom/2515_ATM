@@ -4,10 +4,9 @@ from views.ATM_view import MainWindow
 
 class MainController:
     def __init__(self, frame_controller, user_id):
-        # super().__init__(parent_controller)
         self.frame_controller = frame_controller
         self.master = frame_controller.master
-        self.user = User.get_persist_user_obj(user_id)
+        self.user = User(user_id)
 
         self.interface = MainWindow(self.master)
         self.set_main_window()
@@ -28,14 +27,8 @@ class MainController:
     def _view_deposit(self):
         self.frame_controller.change_controller("view_deposit")
 
-    def _deposit_fund(self):
-        pass
-
     def _view_withdraw(self):
         self.frame_controller.change_controller("view_withdraw")
-
-    def _withdraw_fund(self):
-        pass
 
     def _view_login(self):
         self.frame_controller.change_login()
